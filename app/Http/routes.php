@@ -20,7 +20,39 @@ Route::group(['middleware' => 'auth'], function () {
 	]);
 
 
+
+	//Crear Usuarios:
+	Route::get('Crear-Cuenta', [
+					'uses' => 'HomeController@crearCuenta',
+					'as' =>'registrar'
+	]);
+
+	Route::post('Crear-Cuenta', 'HomeController@postCrearCuenta');
+
+	//Buscar usuarios:
+
+
+	Route::get('Buscar-Cuenta', [
+					'uses' => 'HomeController@buscarCuenta',
+					'as' =>'buscarCuenta'
+	]);
+
+
+
+
+
+
+
+
+
  });
+
+
+
+
+
+
+
 
 Route::get('Recuperar-Clave', [
 				'uses' => 'HomeController@getRecuperar',

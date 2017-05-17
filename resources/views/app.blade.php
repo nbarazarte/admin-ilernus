@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>iAdmin - Administrador ilernus</title>
+		<title>iAdmin - Administrador iLernus</title>
 		<meta name="description" content="" />
 		<meta name="Author" content="Neil Barazarte [ezebarazarte@gmail.com]" />
 

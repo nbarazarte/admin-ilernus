@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Smarty Admin</title>
+		<title>iAdmin - Administrador iLernus</title>
 		<meta name="description" content="" />
 		<meta name="Author" content="Dorin Grigoras [www.stepofweb.com]" />
 
@@ -20,6 +20,10 @@
 		{!! Html::style('smarty/assets/css/essentials.css') !!}
 		{!! Html::style('smarty/assets/css/layout.css') !!}
 		{!! Html::style('smarty/assets/css/color_scheme/green.css') !!}
+		{!! Html::style('smarty/assets/css/font-awesome.min.css') !!}
+
+		<!-- PAGE LEVEL STYLES -->
+		{!! Html::style('smarty/assets/css/layout-datatables.css') !!}
 
 	</head>
 	<!--
@@ -50,195 +54,87 @@
 				<nav id="sideNav"><!-- MAIN MENU -->
 					<ul class="nav nav-list">
 						<li class="active"><!-- dashboard -->
-							<a class="dashboard" href="index.html"><!-- warning - url used by default by ajax (if eneabled) -->
+							<a class="dashboard" href="{{ route('home')}}"><!-- warning - url used by default by ajax (if eneabled) -->
 								<i class="main-icon fa fa-dashboard"></i> <span>Dashboard</span>
 							</a>
 						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-bar-chart-o"></i> <span>Graphs</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="graphs-flot.html">Flot Charts</a></li>
-								<li><a href="graphs-morris.html">Morris Charts</a></li>
-								<li><a href="graphs-inline.html">Inline Charts</a></li>
-								<li><a href="graphs-chartjs.html">Chart.js</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-table"></i> <span>Tables</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="tables-bootstrap.html">Bootstrap Tables</a></li>
-								<li><a href="tables-jqgrid.html">jQuery Grid</a></li>
-								<li><a href="tables-footable.html">jQuery Footable</a></li>
-								<li>
-									<a href="#">
-										<i class="fa fa-menu-arrow pull-right"></i>
-										Datatables
-									</a>
-									<ul>
-										<li><a href="tables-datatable-managed.html">Managed Datatables</a></li>
-										<li><a href="tables-datatable-editable.html">Editable Datatables</a></li>
-										<li><a href="tables-datatable-advanced.html">Advanced Datatables</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-pencil-square-o"></i> <span>Forms</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="form-elements.html">Smarty Elements</a></li>
-								<li><a href="form-masked-inputs.html">Masked Inputs</a></li>
-								<li><a href="form-pickers.html">Pickers</a></li>
-								<li><a href="form-ui-sliders.html">UI Sliders</a></li>
-								<li><a href="form-validation.html">Validation Form</a></li>
-								<li><a href="form-html-editors.html">Html Editors</a></li>
-								<li><a href="form-autosuggest.html">Autosuggest</a></li>
-								<li><a href="form-x-editable.html">Form X-Editable</a></li>
-								<li><a href="form-dropzone.html">Dropzone File Upload</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-gears"></i> <span>UI Features</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="ui-portlets.html">Portlets</a></li>
-								<li><a href="ui-buttons.html">Buttons</a></li>
-								<li>
-									<a href="#">
-										<i class="fa fa-menu-arrow pull-right"></i>
-										Icons
-									</a>
-									<ul>
-										<li><a href="ui-icons-fontawsome.html">Fontawsome</a></li>
-										<li><a href="ui-icons-etline.html">Et-Line Icons</a></li>
-										<li><a href="ui-icons-glyphicons.html">Glyph Icons</a></li>
-										<li><a href="ui-icons-flags.html">Flags</a></li>
-									</ul>
-								</li>
-								<li><a href="ui-alerts-dialogs.html">Alerts &amp; Dialogs</a></li>
-								<li><a href="ui-tabs-acordion-navs.html">Tabs, Acordion &amp; Navs</a></li>
-								<li><a href="ui-knob.html">Knob Circles</a></li>
-								<li><a href="ui-nestable.html">Nestable List</a></li>
-								<li><a href="ui-toastr.html">Toastr Notifications</a></li>
-								<li><a href="ui-modals.html">Modals</a></li>
-								<li><a href="ui-grid.html">Grid</a></li>
-								<li><a href="ui-google-maps.html">Google Maps</a></li>
-								<li><a href="ui-vector-maps.html">Vector Maps</a></li>
-								<li><a href="ui-essentials.html">Essentials</a></li>
-								<li>
-									<a href="#">
-										<i class="fa fa-menu-arrow pull-right"></i>
-										<i class="fa fa-folder-open"></i>
-										Deep Navigation
-									</a>
-									<!-- 3rd Level -->
-									<ul>
-										<li>
-											<a href="#">
-												3rd Level
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-menu-arrow pull-right"></i>
-												<i class="fa fa-folder-open"></i>
-												4rd Level
-											</a>
-											<!-- 4th Level -->
-											<ul>
-												<li>
-													<a href="#">
-														4th Level
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<i class="fa fa-menu-arrow pull-right"></i>
-														<i class="fa fa-folder-open"></i>
-														5th Level
-													</a>
-													<!-- 5th Level -->
-													<ul>
-														<li>
-															<a href="#">
-																5th level
-															</a>
-														</li>
-														<li>
-															<a href="#">
-																<i class="fa fa-menu-arrow pull-right"></i>
-																<i class="fa fa-folder-open"></i>
-																6th level
-															</a>
-															<!-- 6th Level -->
-															<ul>
-																<li>
-																	<a href="#">
-																		6th level
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		6th level
-																	</a>
-																</li>
-															</ul><!-- /6th Level -->
-														</li>
-													</ul><!-- /5th Level -->
-												</li>
-											</ul><!-- /4th Level -->
-										</li>
-									</ul><!-- /3rd Level -->
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-book"></i> <span>Pages</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="page-invoice.html">Invoice</a></li>
-								<li><a href="page-login.html">Login</a></li>
-								<li><a href="page-register.html">Register</a></li>
-								<li><a href="page-lock.html">Lock Screen</a></li>
-								<li><a href="page-forum.html">Forum</a></li>
-								<li><a href="page-404.html">Error 404</a></li>
-								<li><a href="page-500.html">Error 500</a></li>
-								<li><a href="page-pricing.html">Pricing Table</a></li>
-								<li><a href="page-search.html">Search Result</a></li>
-								<li><a href="page-sidebar.html">Sidebar Page</a></li>
-								<li><a href="page-user-profile.html">User Profile</a></li>
-								<li><a href="page-blank-1.html">Blank Page</a></li>
-							</ul>
-						</li>
-					</ul>
 
-					<!-- SECOND MAIN LIST -->
-					<h3>MORE</h3>
-					<ul class="nav nav-list">
 						<li>
-							<a href="calendar.html">
-								<i class="main-icon fa fa-calendar"></i>
-								<span class="label label-warning pull-right">2</span> <span>Calendar</span>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-users"></i> <span>Usuarios</span>
 							</a>
+							<ul><!-- submenus -->
+								<li><a href="{{ route('registrar') }}">Nuevo</a></li>
+								<li><a href="{{ route('buscarCuenta') }}">Buscar</a></li>
+							</ul>
 						</li>
+
 						<li>
-							<a href="../../HTML/start.html">
-								<i class="main-icon fa fa-link"></i>
-								<span class="label label-danger pull-right">PRO</span> <span>Frontend</span>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-id-card-o""></i> <span>Equipo iLernus</span>
 							</a>
+							<ul><!-- submenus -->
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										Directores
+									</a>
+									<ul>
+										<li><a href="#">Nuevo</a></li>
+										<li><a href="#">Buscar</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										Gerentes
+									</a>
+									<ul>
+										<li><a href="#">Nuevo</a></li>
+										<li><a href="#">Buscar</a></li>
+									</ul>
+								</li>
+
+							</ul>
+						</li>						
+
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-graduation-cap"></i> <span>Instructores</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="#">Nuevo</a></li>
+								<li><a href="#">Buscar</a></li>
+							</ul>
 						</li>
+
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-book"></i> <span>Cursos</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="#">Nuevo</a></li>
+								<li><a href="#">Buscar</a></li>
+							</ul>
+						</li>						
+
+
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-rss"></i> <span>Blog</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="#">Nuevo</a></li>
+								<li><a href="#">Buscar</a></li>
+							</ul>
+						</li>						
+
 					</ul>
 
 				</nav>
@@ -256,7 +152,7 @@
 
 				<!-- Logo -->
 				<span class="logo pull-left">
-					<img src="smarty/assets/images/logo_light.png" alt="admin panel" height="35" />
+					<img src="smarty/assets/images/logo.png" alt="logo ilernus" height="35" />
 				</span>
 
 				<form method="get" action="page-search.html" class="search pull-left hidden-xs">
@@ -271,7 +167,20 @@
 						<!-- USER OPTIONS -->
 						<li class="dropdown pull-left">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-								<img class="user-avatar" alt="" src="smarty/assets/images/noavatar.jpg" height="34" /> 
+								
+
+	                            @if (Auth::user()->blb_img != "")
+	                            	<img src="data:image/jpeg;base64,{{ Auth::user()->blb_img }}" alt="{!! Auth::user()->str_nombre !!} {!! Auth::user()->str_apellido !!}" title="{!! Auth::user()->str_nombre !!} {!! Auth::user()->str_apellido !!}" height="34">
+								@else
+
+								  @if (Auth::user()->str_genero == 'M')
+								  	<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">								  	
+								  @elseif (Auth::user()->str_genero == 'F')
+								  	<img src="{{ asset('smarty/assets/images/usuario_femenino.png') }}" alt="" height="34">
+								  @endif
+
+								 @endif 	
+
 								<span class="user-name">
 									<span class="hidden-xs">
 										{{ Auth::user()->str_nombre }} {{ Auth::user()->str_apellido }} <i class="fa fa-angle-down"></i>
@@ -281,7 +190,7 @@
 							<ul class="dropdown-menu hold-on-click">
 
 								<li><!-- settings -->
-									<a href="page-user-profile.html"><i class="fa fa-cogs"></i> Configuración</a>
+									<a href="#"><i class="fa fa-cogs"></i> Configuración</a>
 								</li>
 
 								<li class="divider"></li>
@@ -319,6 +228,9 @@
 		<script type="text/javascript">var plugin_path = 'smarty/assets/plugins/';</script>
 		{!! Html::script('smarty/assets/plugins/jquery/jquery-2.1.4.min.js') !!}
 		{!! Html::script('smarty/assets/js/app.js') !!}
+
+
+@if(Route::current()->getName() == 'home')
 		
 		<!-- PAGE LEVEL SCRIPT -->
 		<script type="text/javascript">
@@ -343,10 +255,10 @@
 					bottom-full-width
 					
 				false = click link (example: "http://www.stepofweb.com")
-			*/
+			
 			_toastr("Welcome, you have 2 new orders","top-right","success",false);
 
-
+*/
 
 
 			/** SALES CHART
@@ -432,6 +344,104 @@
 				});
 			});
 			</script>
+
+@endif
+
+@if(Route::current()->getName() == 'buscarCuenta')
+
+		<!-- PAGE LEVEL SCRIPTS -->
+		<script type="text/javascript">
+			loadScript(plugin_path + "datatables/js/jquery.dataTables.min.js", function(){
+				loadScript(plugin_path + "datatables/dataTables.bootstrap.js", function(){
+
+					if (jQuery().dataTable) {
+
+						var table = jQuery('#datatable_sample');
+						table.dataTable({
+							"columns": [
+							{
+								"orderable": true
+							}, 
+							{
+								"orderable": true
+							}, 
+							{
+								"orderable": true
+							},
+							{
+								"orderable": true
+							}, 
+							{
+								"orderable": true
+							}, 
+							{
+								"orderable": true
+							}, 
+							{
+								"orderable": true
+							}, 														
+							{
+								"orderable": true
+							}
+							],
+							"lengthMenu": [
+								[5, 15, 20, -1],
+								[5, 15, 20, "Todos"] // change per page values here
+							],
+							// set the initial value
+							"pageLength": 5,            
+							"pagingType": "bootstrap_full_number",
+							"language": {
+								"lengthMenu": "  _MENU_ Filas",
+								"paginate": {
+									"previous":"Anterior",
+									"next": "Siguiente",
+									"last": "Fin",
+									"first": "Inicio"
+								}
+							},
+							"columnDefs": [{  // set default column settings
+								'orderable': false,
+								'targets': [0]
+							}, {
+								"searchable": false,
+								"targets": [0]
+							}],
+							"order": [
+								[1, "asc"]
+							] // set first column as a default sort by asc
+						});
+
+						var tableWrapper = jQuery('#datatable_sample_wrapper');
+
+						table.find('.group-checkable').change(function () {
+							var set = jQuery(this).attr("data-set");
+							var checked = jQuery(this).is(":checked");
+							jQuery(set).each(function () {
+								if (checked) {
+									jQuery(this).attr("checked", true);
+									jQuery(this).parents('tr').addClass("active");
+								} else {
+									jQuery(this).attr("checked", false);
+									jQuery(this).parents('tr').removeClass("active");
+								}
+							});
+							jQuery.uniform.update(set);
+						});
+
+						table.on('change', 'tbody tr .checkboxes', function () {
+							jQuery(this).parents('tr').toggleClass("active");
+						});
+
+						tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
+
+					}
+
+				});
+			});
+		</script>			
+
+@endif
 
 
 	</body>

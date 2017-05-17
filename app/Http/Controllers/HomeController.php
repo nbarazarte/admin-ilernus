@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use PHPMailer;
+use DB;
+use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,7 +24,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return \View::make('index');
+        
+        $totalCursos = DB::table('tbl_cursos')->count();
+
+        $totalInstructores = DB::table('tbl_instructores')->count();
+
+        $instructores = DB::table('tbl_instructores')->get();
+
+        $cursos = DB::table('tbl_cursos')->get();
+
+        $negocios = DB::table('tbl_cursos')->where('str_categoria', 'negocios')->count();
+
+        $desarrollo = DB::table('tbl_cursos')->where('str_categoria', 'desarrollo')->count();
+
+        $productividad = DB::table('tbl_cursos')->where('str_categoria', 'productividad')->count();
+
+        $tecnologia = DB::table('tbl_cursos')->where('str_categoria', 'tecnologia')->count();
+
+        return \View::make('index', compact('totalCursos','totalInstructores','instructores','cursos','negocios','desarrollo','productividad','tecnologia'));
     }
 
     /**
@@ -182,7 +202,6 @@ class HomeController extends Controller
 
     }
     
-    
     public function generarCodigo($longitud) {
         $key = '';
         $pattern = '1234567890abcdefghijklmnopqrstuvwxyz';
@@ -192,14 +211,160 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
+     * @return Response
+     */
+    public function crearCuenta()
+    {
+        return \View::make('crearCuenta');
+    }
+
+  /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function postCrearCuenta(Request $request)
     {
-        //
+        
+
+        $validator = $this->validator($request->all());
+
+
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+        
+        $this->create($request->all());
+
+        //return redirect($this->redirectPath()); 
+        Session::flash('message','¡El usuario ha sido creado con éxito!');
+         return Redirect::to('/Crear-Cuenta'); 
+        
     }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+                
+            'name' => 'required|max:255|unique:tbl_admin',
+            'str_cedula' => 'required|max:255|unique:tbl_admin',
+            'str_nombre' => 'required|max:255',
+            'str_apellido' => 'required|max:255',
+            'str_genero' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:tbl_admin',
+            'str_telefono' => 'required|max:255',
+            'str_departamento' => 'required|max:255',
+            'str_rol' => 'required|max:255',
+            'password' => 'min:6|required', 
+        ]);
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    protected function create(array $data)
+    {
+        
+        if(!empty($data['blb_img'])){
+
+            return User::create([
+
+                'lng_idadmin' =>  Auth::user()->id,
+                'name' => $data['name'],
+                'str_cedula' => $data['str_cedula'],
+                'str_nombre' => $data['str_nombre'],
+                'str_apellido' => $data['str_apellido'],
+                'str_genero' => $data['str_genero'],
+                'email' => $data['email'],
+                'str_telefono' => $data['str_telefono'],
+                'str_departamento' => $data['str_departamento'],
+                'str_rol' => $data['str_rol'],
+                'password' => $data['password'],
+                'blb_img' => $data['blb_img'],
+                //'blb_img' => base64_encode(file_get_contents($data['blb_img'])),
+
+            ]);
+
+        }else{
+
+            return User::create([
+                'lng_idadmin' =>  Auth::user()->id,
+                'name' => $data['name'],
+                'str_cedula' => $data['str_cedula'],
+                'str_nombre' => $data['str_nombre'],
+                'str_apellido' => $data['str_apellido'],
+                'str_genero' => $data['str_genero'],
+                'email' => $data['email'],
+                'str_telefono' => $data['str_telefono'],
+                'str_departamento' => $data['str_departamento'],
+                'str_rol' => $data['str_rol'],
+                'password' => $data['password'],
+
+            ]);            
+        }
+    }
+
+
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function buscarCuenta()
+    {
+        
+
+
+        $usuarios = DB::table('tbl_admin')->get();
+        
+        return \View::make('buscarCuenta', compact('usuarios'));
+
+
+  
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
