@@ -185,7 +185,7 @@ class HomeController extends Controller
              
             if (!$mail->send()) {
                 //echo "Error: " . $mail->ErrorInfo;
-                Session::flash('message','Error!'.$mail->ErrorInfo);
+                Session::flash('error','Error!'.$mail->ErrorInfo);
             } else {
                 Session::flash('message','Su clave fue enviada exitosamente a su dirección de correo electrónico');
             }
@@ -196,7 +196,7 @@ class HomeController extends Controller
 
         if ($flag == false) {
             //echo "no existe";
-             Session::flash('message','Error!, la dirección de correo eletrónico no existe en el sistema');
+             Session::flash('error','¡Error!, la dirección de correo eletrónico no existe en el sistema');
              return Redirect::to('/Recuperar-Clave'); 
         }
 
@@ -217,7 +217,31 @@ class HomeController extends Controller
      */
     public function crearCuenta()
     {
-        return \View::make('crearCuenta');
+
+        $generos = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'genero')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');
+
+        $roles = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'rol')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');
+
+        $gerencias = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'gerencia')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');  
+
+        //dd($gerencias);die(); 
+
+        return \View::make('crearCuenta', compact('generos','roles','gerencias'));
     }
 
   /**
@@ -228,11 +252,8 @@ class HomeController extends Controller
      */
     public function postCrearCuenta(Request $request)
     {
-        
 
         $validator = $this->validator($request->all());
-
-
 
         if ($validator->fails()) {
             $this->throwValidationException(
@@ -244,7 +265,7 @@ class HomeController extends Controller
 
         //return redirect($this->redirectPath()); 
         Session::flash('message','¡El usuario ha sido creado con éxito!');
-         return Redirect::to('/Crear-Cuenta'); 
+        return Redirect::to('/Crear-Cuenta'); 
         
     }
 
@@ -297,6 +318,7 @@ class HomeController extends Controller
                 'password' => $data['password'],
                 'blb_img' => $data['blb_img'],
                 //'blb_img' => base64_encode(file_get_contents($data['blb_img'])),
+                'str_estatus' => 'activo',
 
             ]);
 
@@ -314,13 +336,11 @@ class HomeController extends Controller
                 'str_departamento' => $data['str_departamento'],
                 'str_rol' => $data['str_rol'],
                 'password' => $data['password'],
+                'str_estatus' => 'activo',
 
             ]);            
         }
     }
-
-
-
 
     /**
      * Display a listing of the resource.
@@ -329,15 +349,112 @@ class HomeController extends Controller
      */
     public function buscarCuenta()
     {
-        
-
-
+    
         $usuarios = DB::table('tbl_admin')->get();
         
         return \View::make('buscarCuenta', compact('usuarios'));
+    }
 
 
-  
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function estatusUsuario($id, $estatus)
+    {
+    
+        $estatusUsuario = DB::update('update tbl_admin set str_estatus = "'.$estatus.'", lng_idadmin = '.Auth::user()->id.' where id = '.$id.' and bol_eliminado = 0');
+         
+        return $estatusUsuario;
+    }
+
+    public function verCuenta($id)
+    {
+    
+        $usuarios = DB::table('tbl_admin')->where('id', $id)->get();
+
+        $generos = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'genero')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');
+
+        $roles = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'rol')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');
+
+        $gerencias = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'gerencia')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');
+
+        $estatus = DB::table('cat_datos_maestros')
+        ->where('str_tipo', 'estatus')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })
+        ->lists('str_descripcion');                
+
+        //dd($generos);die();
+        return \View::make('cuenta', compact('usuarios','generos', 'roles','gerencias','estatus'));
+    }
+
+    public function editarCuenta(Request $request)
+    {
+        
+        /*$validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }*/
+
+        $user = User::find($request->id);
+        $user->fill($request->all());
+        $user->save();
+
+        Session::flash('message','¡Se han editado los datos personales con éxito!');
+        return Redirect::to('/Ver-Cuenta-'.$request->id); 
+
+    }
+
+    public function editarImagen(Request $request)
+    {
+        
+        $user = User::find($request->id);
+        $user->fill($request->all());
+        $user->save();
+
+        Session::flash('message','¡Se ha cambiado la imágen de perfil con éxito!');
+        return Redirect::to('/Ver-Cuenta-'.$request->id); 
+
+    }
+
+    public function eliminarImagen(Request $request)
+    {
+        
+        $imagen = DB::update('update tbl_admin set blb_img = null where id = '.$request->id.' and bol_eliminado = 0');    
+
+        Session::flash('message','¡Se ha eliminado la imágen de perfil con éxito!');
+        return Redirect::to('/Ver-Cuenta-'.$request->id); 
+
+    }
+
+    public function eliminarCuenta(Request $request)
+    {
+        
+        $cuenta = DB::update('update tbl_admin set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
+
+        Session::flash('message','¡Se ha eliminado la cuenta con éxito!');
+        return Redirect::to('/Ver-Cuenta-'.$request->id); 
 
     }
 
@@ -353,18 +470,21 @@ class HomeController extends Controller
 
 
 
+    public function verCuenta2($id)
+    {
+    
+        $usuarios = DB::table('tbl_admin')->where('id', $id)->get();
 
+        //dd($usuarios);die();
 
+        if( !$usuarios){
 
+           return \View::make('errors.404');
+        }
+        
+        return \View::make('cuenta', compact('usuarios'));
 
-
-
-
-
-
-
-
-
+    }
 
     /**
      * Store a newly created resource in storage.

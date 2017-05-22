@@ -1,6 +1,8 @@
-@extends('app2')
+@extends('app')
 
 @section('content')
+
+@include('menu')
 
 <section id="middle">
 	<div id="content" class="dashboard padding-20">

@@ -26,10 +26,20 @@
                 <div class="alert alert-success" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                  <strong><i class="fa fa-exclamation-triangle"></i></strong> {{Session::get('message')}}
+                  <strong><i class="fa fa-check"></i></strong> {{Session::get('message')}}
                 </div>                          
         
-            @endif 		    
+            @endif
+
+            @if(Session::has('error'))
+            
+                <div class="alert alert-danger" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                  <strong><i class="fa fa-exclamation-triangle"></i></strong> {{Session::get('error')}}
+                </div>                          
+        
+            @endif              		    
 
 		</div>
 

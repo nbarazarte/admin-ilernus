@@ -1,32 +1,11 @@
-@extends('app2')
+@extends('app')
 
 @section('content')
 
-					<?php
+@include('menu')
 
-							foreach ($usuarios as $usuario) {
 
-							    $arr =  array(
-
-							    			'cedula' => $usuario->str_cedula,
-							    			'usuario' => $usuario->name, 
-							    			'nombre' => $usuario->str_nombre.' '.$usuario->str_apellido, 
-							    			'genero' => $usuario->str_genero, 
-							    			'correo' => $usuario->email, 
-							    			'telefono' => $usuario->str_telefono,
-							    			'departamento' => $usuario->str_departamento, 
-							    			'rol' => $usuario->str_rol	
-
-							    		);
-
-							    $valores[] = $arr;	
-
-							}	
-
-							//print_r($valores);
-							//echo $datos = json_encode($valores);
-							$datos = json_encode($valores);
-					?>
+<div id="pagina"></div>
 
 			<!-- 
 				MIDDLE 
@@ -38,14 +17,18 @@
 				<header id="page-header">
 					<h1>Buscar Cuenta</h1>
 					<ol class="breadcrumb">
-						<li><a href="#">Inicio</a></li>
-						<li class="active">Buscar Cuenta</li>
+					 <li><a href="{{ route('home')}}">Dashboard</a></li>
+					  <li class="active">Buscar Cuenta</li>
 					</ol>
+
+
+					
 				</header>
 				<!-- /page title -->
 
 
 				<div id="content" class="padding-20">
+
 
 					<!-- 
 						PANEL CLASSES:
@@ -80,25 +63,34 @@
 							<table class="table table-striped table-bordered table-hover" id="datatable_sample">
 								<thead>
 									<tr>
-
+										<th>Acciones</th>
 										<th>Cédula</th>
 										<th>Usuario</th>
 										<th>Nombre</th>
 										<th>Género</th>
 										<th>Departamento</th>
 										<th>Teléfono</th>
+										<th>Correo</th>
 										<th>Rol</th>
-										<th>Estatus</th>
+										<th>Activo</th>
 									</tr>
 								</thead>
 
 								<tbody>
 
 									@foreach ($usuarios as $usuario)
-									
-										<tr class="odd gradeX">
 
+										<tr class="odd gradeX"  <?php if (Auth::user()->name == $usuario->name) {?> style="background-color: #DBDBDB" <?php }?>  >
 
+												<td>
+
+													<a href="{{ route('cuenta',[$usuario->id]) }}" type="button" class="btn btn-warning">
+														
+														<i class="fa fa-search" aria-hidden="true"></i>
+
+													</a>
+
+												</td>
 												<td>
 														{{ $usuario->str_cedula }}
 												</td>
@@ -106,7 +98,7 @@
 														{{ $usuario->name }}
 												</td>
 												<td>
-													 	{{ $usuario->str_nombre }} {{ $usuario->str_apellido }}
+													 	{{ ucfirst($usuario->str_nombre) }} {{ ucfirst($usuario->str_apellido) }}
 												</td>
 												<td class="center">
 
@@ -119,14 +111,65 @@
 													 	{{ $usuario->str_telefono }}
 												</td>
 												<td>
-													 	{{ $usuario->str_rol }}
-												</td>																																	
+													 	{{ $usuario->email }}
+												</td>												
 												<td>
-													<span class="label label-sm label-success">
-														
-														Approved
 
-													</span>
+													@if ($usuario->str_rol == "Administrador")
+
+												 		<span class="label label-primary">{{ $usuario->str_rol }}</span>
+
+													@else
+
+														<span class="label label-info">{{ $usuario->str_rol }}</span>
+
+													@endif
+
+												</td>																																	
+												<td class="center">
+
+													@if (Auth::user()->str_rol == "Administrador")
+
+												
+														<label class="switch switch-success switch-round">
+
+
+															@if ($usuario->str_estatus == "Activo")
+																
+																<input type="checkbox" checked="" onchange="estatusUsuario({{ $usuario->id }},'Inactivo')">
+																
+															@elseif ($usuario->str_estatus == "Inactivo")
+																
+																<input type="checkbox" onchange="estatusUsuario({{ $usuario->id }},'Activo')">
+																
+															@endif
+
+															<span class="switch-label" data-on="SI" data-off="NO"></span>
+
+
+														</label>
+
+														<div id="estatus"></div>
+
+													@else
+
+
+														@if ($usuario->str_estatus == "Inactivo")
+
+													 		<span class="label label-danger">{{ $usuario->str_estatus }}</span>
+
+														@else
+
+															<span class="label label-success">{{ $usuario->str_estatus }}</span>
+
+														@endif
+													
+
+
+													@endif
+
+													
+
 												</td>
 
 										</tr>

@@ -1,7 +1,8 @@
-@extends('app2')
+@extends('app')
 
 @section('content')
 
+@include('menu')
 
 			<!-- 
 				MIDDLE 
@@ -13,7 +14,7 @@
 				<header id="page-header">
 					<h1>Crear Cuenta</h1>
 					<ol class="breadcrumb">
-						<li><a href="#">Inicio</a></li>
+						<li><a href="{{ route('home')}}">Dashboard</a></li>
 						<li class="active">Crear Cuenta</li>
 					</ol>
 				</header>
@@ -60,7 +61,7 @@
 
 								<div class="panel-body">
 
-								{!! Form::open(['route' => 'registrar', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'sky-form boxed', '' => '','data-toastr-position' => 'top-right']) !!} 										
+								{!! Form::open(['route' => 'registrar', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'sky-form boxed validate', 'data-success' => 'Se ha creado la cuenta con éxito','data-toastr-position' => 'top-right']) !!} 										
 
 											<fieldset>
 												
@@ -76,7 +77,7 @@
 
 															<label class="input">
 																<i class="icon-append fa fa-user-secret"></i>
-																<input type="text" name="name" value="" class="form-control required">
+																{!! Form::input('text', 'name', '', ['id' => 'name', 'class'=> 'form-control required','maxlength'=> '10']) !!}  
 																<span class="tooltip tooltip-top-right">Ingrese un nick de usuario</span>
 															</label>
 
@@ -84,12 +85,17 @@
 														<div class="col-md-6 col-sm-6">
 															<label>Sexo *</label>
 															<label class="input margin-bottom-10">
-																<i class="icon-append fa fa-venus-mars" aria-hidden="true"></i>
-																<select id="str_genero" name="str_genero" class="form-control pointer required">
-																	<option value="">--- Seleccione ---</option>
-																	<option value="F">Femenino</option>
-																	<option value="M">Masculino</option>
-																</select>
+															<i class="icon-append fa fa-venus-mars" aria-hidden="true"></i>
+															<select name="str_genero" class="form-control pointer required">
+																<option value="">--- Seleccione ---</option>
+
+																	@foreach ($generos as $value)
+																				
+																		<option value="{{$value}}">{{$value}}</option>
+
+																	@endforeach
+
+															</select>
 																<span class="tooltip tooltip-top-right">seleccione el género del usuario</span>
 															</label>
 														</div>
@@ -103,7 +109,7 @@
 	
 															<label class="input">
 																<i class="icon-append fa fa-user"></i>
-																<input type="text" name="str_nombre" value="" class="form-control required">
+																{!! Form::input('text', 'str_nombre', '', ['id' => 'str_nombre', 'class'=> 'form-control required','maxlength'=> '10']) !!}  
 																<span class="tooltip tooltip-top-right">Ingrese el nombre del usuario</span>
 															</label>
 
@@ -112,7 +118,7 @@
 															<label>Apellido *</label>
 															<label class="input">
 																<i class="icon-append fa fa-user"></i>
-																<input type="text" name="str_apellido" value="" class="form-control required">
+																{!! Form::input('text', 'str_apellido', '', ['id' => 'str_apellido', 'class'=> 'form-control required','maxlength'=> '10']) !!} 
 																<span class="tooltip tooltip-top-right">Ingrese el apellido del usuario</span>
 															</label>
 														</div>
@@ -125,7 +131,7 @@
 															<label>Cédula *</label>
 															<label class="input">
 																<i class="icon-append fa fa-id-card-o""></i>
-																<input type="text" id="str_cedula" name="str_cedula" class="form-control masked" data-format="99999999" data-placeholder="X" placeholder="Ej.:05888777">
+																{!! Form::input('text', 'str_cedula', '', ['id' => 'str_cedula', 'class'=> 'form-control masked required','maxlength'=> '8','data-format' => '99999999', 'data-placeholder' => 'X', 'placeholder' => 'Ej.:05888777']) !!}
 																<span class="tooltip tooltip-top-right">Ingrese la cédula del usuario</span>
 															</label>
 														</div>
@@ -133,7 +139,7 @@
 															<label>Teléfono *</label>
 															<label class="input">
 																<i class="icon-append fa fa-volume-control-phone" aria-hidden="true"></i>
-																<input type="text" class="form-control masked required" id="str_telefono" name="str_telefono" data-format="(9999) 999-9999" data-placeholder="0" placeholder="Ej.: (0414) 555-4433">
+																{!! Form::input('text', 'str_telefono', '', ['id' => 'str_telefono', 'class'=> 'form-control masked','maxlength'=> '18','data-format' => '(9999) 999-9999', 'data-placeholder' => '0', 'placeholder' => 'Ej.: (0414) 555-4433']) !!}																
 																<span class="tooltip tooltip-top-right">Ingrese la cédula del usuario</span>
 															</label>
 														</div>
@@ -144,12 +150,18 @@
 													<div class="form-group">
 														<div class="col-md-6 col-sm-6">
 															<label>Gerencia *</label>
+
 															<select name="str_departamento" class="form-control pointer required">
 																<option value="">--- Seleccione ---</option>
-																<option value="Recursos Humanos">Recursos Humanos</option>
-																<option value="Mercadeo">Mercadeo</option>
-																<option value="Tecnología">Tecnología</option>
+
+																	@foreach ($gerencias as $value)
+																				
+																		<option value="{{$value}}">{{$value}}</option>
+
+																	@endforeach
+
 															</select>
+
 														</div>
 	
 														<div class="col-md-6 col-sm-6">
@@ -157,7 +169,7 @@
 															<label>Correo Electrónico *</label>															
 															<label class="input">
 																<i class="icon-append fa fa-envelope"></i>
-																<input id="email" name="email" type="email" class="form-control required">
+																{!! Form::input('email', 'email', '', ['id' => 'email', 'class'=> 'form-control required','maxlength'=> '30']) !!}  																
 																<span class="tooltip tooltip-top-right">Ingrese su dirección de correo electrónico</span>
 															</label>
 
@@ -171,12 +183,17 @@
 
 															<label>Rol *</label>
 															<label class="input margin-bottom-10">
-																<i class="icon-append fa fa-eye" aria-hidden="true"></i>
-																<select id="str_rol" name="str_rol" class="form-control pointer required">
-																	<option value="">--- Seleccione ---</option>
-																	<option value="Administrador">Administrador</option>
-																	<option value="Usuario">Usuario</option>
-																</select>
+															<i class="icon-append fa fa-eye" aria-hidden="true"></i>
+															<select name="str_rol" class="form-control pointer required">
+																<option value="">--- Seleccione ---</option>
+
+																	@foreach ($roles as $value)
+																				
+																		<option value="{{$value}}">{{$value}}</option>
+
+																	@endforeach
+
+															</select>																
 																<b class="tooltip tooltip-bottom-right">Rol</b>
 															</label>
 
@@ -185,7 +202,7 @@
 															<label>Clave *</label>															
 															<label class="input">
 																<i class="icon-append fa fa-key" aria-hidden="true"></i>
-																<input class="form-control required" id="password" name="password" type="password">
+																{!! Form::input('password', 'password', '', ['id' => 'password', 'class'=> 'form-control required','maxlength'=> '8']) !!}  
 																<span class="tooltip tooltip-top-right">Ingrese la clave de usuario</span>
 															</label>
 
@@ -198,17 +215,13 @@
 													<div class="form-group">
 														<div class="col-md-12">
 															<label>
-																Foto
+																Imágen de Perfil
 																<small class="text-muted">(Opcional)</small>
 															</label>
 
-															
-
 															{!! Form::file('blb_img',['id' => 'blb_img','data-btn-text' =>'Buscar Foto', 'class' => 'custom-file-upload']) !!}
 
-
-															<small class="text-muted block">Tamaño máximo: 1Mb (jpg/png)</small>														
-
+															<small class="text-muted block">Tamaño máximo: 1Mb (jpg/png)</small>												
 														</div>
 													</div>
 												</div>
@@ -217,9 +230,9 @@
 
 											<div class="row">
 												<div class="col-md-12">
-													<button type="submit" class="btn btn-3d btn-teal btn-xlg btn-block margin-top-30">
-														CREAR CUENTA
-													</button>
+
+													{!! Form::submit('CREAR CUENTA', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
+
 												</div>
 											</div>
 
