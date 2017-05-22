@@ -29,7 +29,15 @@
 
 				<div id="content" class="padding-20">
 
-
+                    			@if(Session::has('message'))
+					            
+									<div class="alert alert-success" role="alert">
+									  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									  <span aria-hidden="true">&times;</span></button>
+									  <strong><i class="fa fa-check"></i></strong> {{Session::get('message')}}
+									</div> 							
+							
+								@endif
 					<!-- 
 						PANEL CLASSES:
 							panel-default
@@ -63,7 +71,7 @@
 							<table class="table table-striped table-bordered table-hover" id="datatable_sample">
 								<thead>
 									<tr>
-										<th>Acciones</th>
+										<th>Ver</th>
 										<th>Cédula</th>
 										<th>Usuario</th>
 										<th>Nombre</th>
@@ -130,26 +138,34 @@
 
 													@if (Auth::user()->str_rol == "Administrador")
 
+
+														@if (Auth::user()->id == $usuario->id)
+
+															<span class="label label-success">{{ $usuario->str_estatus }}</span>
+
+														@else
 												
-														<label class="switch switch-success switch-round">
+															<label class="switch switch-success switch-round">
 
 
-															@if ($usuario->str_estatus == "Activo")
-																
-																<input type="checkbox" checked="" onchange="estatusUsuario({{ $usuario->id }},'Inactivo')">
-																
-															@elseif ($usuario->str_estatus == "Inactivo")
-																
-																<input type="checkbox" onchange="estatusUsuario({{ $usuario->id }},'Activo')">
-																
-															@endif
+																@if ($usuario->str_estatus == "Activo")
+																	
+																	<input type="checkbox" checked="" onchange="estatusUsuario({{ $usuario->id }},'Inactivo')">
+																	
+																@elseif ($usuario->str_estatus == "Inactivo")
+																	
+																	<input type="checkbox" onchange="estatusUsuario({{ $usuario->id }},'Activo')">
+																	
+																@endif
 
-															<span class="switch-label" data-on="SI" data-off="NO"></span>
+																<span class="switch-label" data-on="SI" data-off="NO"></span>
 
 
-														</label>
+															</label>
 
-														<div id="estatus"></div>
+															<div id="estatus"></div>
+
+														@endif
 
 													@else
 

@@ -61,7 +61,7 @@ class HomeController extends Controller
      */
     public function getRecuperar()
     {
-        return \View::make('recuperar');
+        return \View::make('usuarios.recuperar');
     }
 
     /**
@@ -241,7 +241,7 @@ class HomeController extends Controller
 
         //dd($gerencias);die(); 
 
-        return \View::make('crearCuenta', compact('generos','roles','gerencias'));
+        return \View::make('usuarios.crearCuenta', compact('generos','roles','gerencias'));
     }
 
   /**
@@ -350,9 +350,9 @@ class HomeController extends Controller
     public function buscarCuenta()
     {
     
-        $usuarios = DB::table('tbl_admin')->get();
+        $usuarios = DB::table('tbl_admin')->where('bol_eliminado', '=', 0)->get();
         
-        return \View::make('buscarCuenta', compact('usuarios'));
+        return \View::make('usuarios.buscarCuenta', compact('usuarios'));
     }
 
 
@@ -372,7 +372,19 @@ class HomeController extends Controller
     public function verCuenta($id)
     {
     
-        $usuarios = DB::table('tbl_admin')->where('id', $id)->get();
+        $usuarios = DB::table('tbl_admin')
+        ->where('id', $id)
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })  
+        ->get();
+
+        if (!$usuarios){
+            
+           Session::flash('message','¡El id solicitado no existe!');
+           return Redirect::to('/Buscar-Cuenta'); 
+            
+        }
 
         $generos = DB::table('cat_datos_maestros')
         ->where('str_tipo', 'genero')
@@ -403,7 +415,7 @@ class HomeController extends Controller
         ->lists('str_descripcion');                
 
         //dd($generos);die();
-        return \View::make('cuenta', compact('usuarios','generos', 'roles','gerencias','estatus'));
+        return \View::make('usuarios.cuenta', compact('usuarios','generos', 'roles','gerencias','estatus'));
     }
 
     public function editarCuenta(Request $request)
@@ -482,7 +494,7 @@ class HomeController extends Controller
            return \View::make('errors.404');
         }
         
-        return \View::make('cuenta', compact('usuarios'));
+        return \View::make('usuarios.cuenta', compact('usuarios'));
 
     }
 
