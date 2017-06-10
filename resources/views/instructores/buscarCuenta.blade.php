@@ -15,10 +15,10 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Buscar Persona iLernus</h1>
+					<h1>Buscar Instructor de Ilernus</h1>
 					<ol class="breadcrumb">
 					 <li><a href="{{ route('home')}}">Dashboard</a></li>
-					  <li class="active">Buscar Persona iLernus</li>
+					  <li class="active">Buscar Instructor de Ilernus</li>
 					</ol>
 
 
@@ -44,7 +44,7 @@
 					<div id="panel-1" class="panel panel-default">
 						<div class="panel-heading">
 							<span class="title elipsis">
-								<strong>LISTADO DE GERENTES Y DIRECTORES DE ILERNUS</strong> <!-- panel title -->
+								<strong>LISTADO DE INSTRUCTORES DE ILERNUS</strong> <!-- panel title -->
 							</span>
 
 							<!-- right options -->
@@ -67,23 +67,20 @@
 										<th>Imágen</th>
 										<th>Nombre</th>
 										<th>Género</th>
-										<th>Cargo</th>
-										<th>Tipo</th>
-										<th>Orden</th>
-										<th>Nombre de la Imágen</th>
+										<th>Profesión</th>
 										<th>Usuario</th>
 									</tr>
 								</thead>
 
 								<tbody>
 
-									@foreach ($directores as $director)
+									@foreach ($instructores as $instructor)
 
 										<tr class="odd gradeX">
 
 												<td>
 
-													<a href="{{ route('cuentaPi',[$director->id]) }}" type="button" class="btn btn-warning">
+													<a href="{{ route('cuentaIns',[$instructor->id]) }}" type="button" class="btn btn-warning">
 														
 														<i class="fa fa-search" aria-hidden="true"></i>
 
@@ -92,45 +89,23 @@
 												</td>
 
 												<td>
-													
-						                            @if ($director->blb_img != "")
-						                            	<img src="data:image/jpeg;base64,{{ $director->blb_img }}" alt="{!! $director->str_nombre !!}" title="{!! $director->str_nombre !!}" height="34">
-													@else
-
-													  @if ($director->str_sexo == 'Masculino')
-													  	<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">						  	
-													  @elseif ($director->str_sexo == 'Femenino')
-													  	<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
-													  @endif
-
-													@endif
-
-												</td>
-
-												<td>
-													 	{{ ucfirst($director->str_nombre) }} 
-												</td>
-												<td>
-
-														{{ $director->str_sexo }}
-
-												</td>
-												<td>
-													 	{{ $director->str_cargo }}
-												</td>
-												<td>
-													 	{{ ucfirst($director->str_tipo) }}
+													<img src="data:image/jpeg;base64,{{ $instructor->blb_img }}" alt="{!! $instructor->str_nombre !!}" title="{!! $instructor->str_nombre !!}" height="34">
 												</td>												
-												<td>
-													 	{{ $director->str_orden }}
-												</td>
 
 												<td>
-													 	{{ $director->str_imagen }}
+													 	{{ ucfirst($instructor->str_nombre) }} 
 												</td>
+												<td>
+
+														{{ $instructor->str_sexo }}
+
+												</td>
+												<td>
+													 	{{ $instructor->str_profesion }}
+												</td>											
 
 												<td>
-													 	{{ $director->usuario }}
+													 	{{ $instructor->usuario }}
 												</td>
 
 										</tr>

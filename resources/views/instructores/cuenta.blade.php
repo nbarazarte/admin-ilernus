@@ -4,7 +4,7 @@
 
 @include('menu')
 
-		@foreach ($personas as $persona)
+		@foreach ($instructores as $instructor)
 
 		@endforeach
 			<!-- 
@@ -14,11 +14,11 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Ver Persona iLernus</h1>
+					<h1>Ver Cuenta Instructor</h1>
 					<ol class="breadcrumb">
 						<li><a href="{{ route('home')}}">Dashboard</a></li>
-						<li><a href="{{ route('buscarCuentaPi')}}">Buscar Persona iLernus</a></li>
-						<li class="active">Ver Persona iLernus</li>
+						<li><a href="{{ route('buscarCuentaIns')}}">Buscar Cuenta Instructor</a></li>
+						<li class="active">Ver Cuenta Instructor</li>
 					</ol>
 				</header>
 
@@ -60,21 +60,21 @@
 								<section class="panel">
 									<div class="panel-body noradius padding-10">
 
-			                            @if ($persona->blb_img != "")
+			                            @if ($instructor->blb_img != "")
 			                            	<center>
 				                            	<figure class="margin-bottom-10"><!-- image -->
-				                            		<img src="data:image/jpeg;base64,{{ $persona->blb_img }}" alt="{!! $persona->str_nombre !!} " title="{!! $persona->str_nombre !!} " height="130">
+				                            		<img src="data:image/jpeg;base64,{{ $instructor->blb_img }}" alt="{!! $instructor->str_nombre !!}" title="{!! $instructor->str_nombre !!}" height="130">
 				                            	</figure>
 			                            	</center>
 										@else
 
-										  @if ($persona->str_sexo == 'Masculino')
+										  @if ($instructor->str_sexo == 'Masculino')
 										  	<center>
 											  	<figure class="margin-bottom-10"><!-- image -->
 											  		<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="130">
 											  	</figure>
 										  	</center>						  	
-										  @elseif ($persona->str_sexo == 'Femenino')
+										  @elseif ($instructor->str_sexo == 'Femenino')
 										  	<center>
 											  	<figure class="margin-bottom-10"><!-- image -->
 											  		<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="130">
@@ -88,8 +88,8 @@
 										
 										<!-- About -->
 										<h3 class="text-black">
-											{{ $persona->str_nombre }}<br>
-											<small class="text-gray size-14"> {{ ucfirst($persona->str_nombre) }} </small>
+											
+											<small class="text-gray size-14"> {{ ucfirst($instructor->str_nombre) }}</small>
 										</h3>
 
 										<!-- /About -->
@@ -137,45 +137,22 @@
 												<fieldset>
 
 													<div class="form-group">
-														<label class="col-md-3 control-label" for="">Tipo</label>
-														<div class="col-md-8">
-															<input type="text" readonly="yes" class="form-control" id="" value="{{ ucfirst($persona->str_tipo) }}">
-														</div>
-													</div>
-
-													<div class="form-group">
 														<label class="col-md-3 control-label" for="">Nombre</label>
 														<div class="col-md-8">
-															<input type="text" readonly="yes" class="form-control" id="" value="{{ ucfirst($persona->str_nombre) }}">
+															<input type="text" readonly="yes" class="form-control" id="" value="{{ ucfirst($instructor->str_nombre) }}">
 														</div>
 													</div>
 
 													<div class="form-group">
 														<label class="col-md-3 control-label" for="">Género</label>
 														<div class="col-md-8">
-															
-															<input type="text" readonly="yes" class="form-control" id="" value="{{ $persona->str_sexo }}">
-															
+															<input type="text" readonly="yes" class="form-control" id="" value="{{ $instructor->str_sexo }}">
 														</div>
 													</div>
 													<div class="form-group">
-														<label class="col-md-3 control-label" for="">Cargo</label>
+														<label class="col-md-3 control-label" for="">Profesión</label>
 														<div class="col-md-8">
-															<input type="text" readonly="yes" class="form-control" id="" value="{{ $persona->str_cargo }}">
-														</div>
-													</div>
-
-													<div class="form-group">
-														<label class="col-md-3 control-label" for="">CV (versión corta)</label>
-														<div class="col-md-8">
-															<textarea readonly="yes" class="form-control" rows="10">{{ $persona->str_cv_corto }}</textarea>
-														</div>
-													</div>
-
-													<div class="form-group">
-														<label class="col-md-3 control-label" for="">CV</label>
-														<div class="col-md-8">
-															<textarea readonly="yes" class="form-control" rows="10">{{ $persona->str_cv }}</textarea>
+															<input type="text" readonly="yes" class="form-control" id="" value="{{ $instructor->str_profesion }}">
 														</div>
 													</div>
 
@@ -188,77 +165,43 @@
 										<!-- Editar -->
 										<div id="editar" class="tab-pane">
 
-											{!! Form::open(['route' => 'editarCuentaPi', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se han editado los datos personales con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload()']) !!} 												
+											{!! Form::open(['route' => 'editarCuentaIns', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se han editado los datos personales con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload()']) !!} 												
 												<h4>Datos Personales</h4>
 
-												{!! Form::input('hidden', 'id', $persona->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
-
-												{!! Form::input('hidden', 'lng_idpersona', Auth::user()->id, ['id' => 'lng_idpersona', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
+												{!! Form::input('hidden', 'id', $instructor->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
 												<fieldset>
 
 													<div class="form-group">
-														<label class="col-md-3 control-label" for="name">Tipo</label>
-														<div class="col-md-8">
-															<select name="str_tipo" class="form-control pointer required">
-																<option value="">--- Seleccione ---</option>
-
-																@foreach ($tipopersona as $tipo)
-																				
-																<option value="{{$tipo}}" <?php if ($tipo == $persona->str_tipo) {?> selected <?php }?> >{{ucfirst($tipo)}}</option>
-
-																@endforeach
-
-															</select>
-														</div>
-													</div>
-
-													<div class="form-group">
 														<label class="col-md-3 control-label" for="str_nombre">Nombre</label>
 														<div class="col-md-8">
-															{!! Form::input('text', 'str_nombre', ucfirst($persona->str_nombre), ['id' => 'str_nombre', 'class'=> 'form-control required','maxlength'=> '60']) !!} 
+															{!! Form::input('text', 'str_nombre', ucfirst($instructor->str_nombre), ['id' => 'str_nombre', 'class'=> 'form-control required','maxlength'=> '60']) !!} 
 														</div>
 													</div>
 
 													<div class="form-group">
 														<label class="col-md-3 control-label" for="name">Género</label>
 														<div class="col-md-8">
-
-														
-
 															<select name="str_sexo" class="form-control pointer required">
 																<option value="">--- Seleccione ---</option>
 
 																@foreach ($generos as $value)
 																				
-																<option value="{{$value}}" <?php if ($value == $persona->str_sexo) {?> selected <?php }?> >{{$value}}</option>
+																<option value="{{$value}}" <?php if ($value == $instructor->str_sexo) {?> selected <?php }?> >{{$value}}</option>
 
 																@endforeach
 
 															</select>
 														</div>
 													</div>
-													<div class="form-group">
-														<label class="col-md-3 control-label" for="str_cargo">Cargo</label>
-														<div class="col-md-8">
-															{!! Form::input('text', 'str_cargo', $persona->str_cargo, ['id' => 'str_cargo', 'class'=> 'form-control required','maxlength'=> '100']) !!} 
-														</div>
-													</div>
 
 													<div class="form-group">
-														<label class="col-md-3 control-label" for="">CV (versión corta)</label>
+														<label class="col-md-3 control-label" for="str_profesion">Profesión</label>
 														<div class="col-md-8">
-															<textarea name="str_cv_corto" class="form-control required" rows="10">{{ $persona->str_cv_corto }}</textarea>
+															{!! Form::input('text', 'str_profesion', ucfirst($instructor->str_profesion), ['id' => 'str_profesion', 'class'=> 'form-control required','maxlength'=> '60']) !!} 
 														</div>
 													</div>
-
-													<div class="form-group">
-														<label class="col-md-3 control-label" for="">CV</label>
-														<div class="col-md-8">
-															<textarea name="str_cv" class="form-control required" rows="10">{{ $persona->str_cv }}</textarea>
-														</div>
-													</div>						
-																											
+																														
 												</fieldset>
 
 												<div class="row">
@@ -270,9 +213,9 @@
 												{!! Form::close() !!}
 
 												<hr />
-												{!! Form::open(['route' => 'editarImagenPi', 'id' => 'imagen-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha cambiado la imágen de perfil con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload()']) !!} 
+												{!! Form::open(['route' => 'editarImagenIns', 'id' => 'imagen-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha cambiado la imágen de perfil con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload()']) !!} 
 												<h4>Imágen de Perfil</h4>
-												{!! Form::input('hidden', 'id', $persona->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
+												{!! Form::input('hidden', 'id', $instructor->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 												<fieldset>
 
 													<div class="form-group">
@@ -301,14 +244,13 @@
 
 												{!! Form::close() !!}												
 
-
 										</div>
 
 										<div id="eliminar" class="tab-pane">
 
-												{!! Form::open(['route' => 'eliminarImagenPi', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha eliminado la imágen con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
+												{!! Form::open(['route' => 'eliminarImagenIns', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al instructor con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
 												<h4>Imágen de Perfil</h4>
-												{!! Form::input('hidden', 'id', $persona->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
+												{!! Form::input('hidden', 'id', $instructor->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
 
 												<div class="row">
@@ -321,14 +263,14 @@
 
 											<hr class="invisible half-margins" />
 
-												{!! Form::open(['route' => 'eliminarCuentaPi', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se ha eliminado con éxito a la persona','data-toastr-position' => 'top-right', 'onsubmit' => '']) !!} 	
-												<h4>Eliminar Persona de iLernus</h4>
-												{!! Form::input('hidden', 'id', $persona->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
+												{!! Form::open(['route' => 'eliminarCuentaIns', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al instructor con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
+												<h4>Eliminar Cuenta</h4>
+												{!! Form::input('hidden', 'id', $instructor->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
 
 												<div class="row">
 													<div class="col-md-9 col-md-offset-3">
-														{!! Form::submit('ELIMINAR PERSONA', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
+														{!! Form::submit('ELIMINAR CUENTA', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
 													</div>
 												</div>
 

@@ -466,7 +466,7 @@ class HomeController extends Controller
         $cuenta = DB::update('update tbl_admin set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
 
         Session::flash('message','¡Se ha eliminado la cuenta con éxito!');
-        return Redirect::to('/Ver-Cuenta-'.$request->id); 
+        return Redirect::to('/Buscar-Cuenta'); 
 
     }
 

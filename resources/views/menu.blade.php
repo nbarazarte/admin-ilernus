@@ -58,8 +58,8 @@
 								<i class="main-icon fa fa-graduation-cap"></i> <span>Instructores</span>
 							</a>
 							<ul><!-- submenus -->
-								<li><a href="#">Nuevo</a></li>
-								<li><a href="#">Buscar</a></li>
+								<li><a href="{{ route('registrarIns') }}">Nuevo</a></li>
+									<li><a href="{{ route('buscarCuentaIns') }}">Buscar</a></li>
 							</ul>
 						</li>
 

@@ -242,7 +242,7 @@
 								@if ($instructor->str_sexo == 'm')
 								 	<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">								  	
 								 @elseif ($instructor->str_sexo == 'f')
-									<img src="{{ asset('smarty/assets/images/usuario_femenino.png') }}" alt="" height="34">
+									<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
 								@endif
 
 								<b>{{ $instructor->str_nombre }}</b> : {{ $instructor->str_profesion }} 

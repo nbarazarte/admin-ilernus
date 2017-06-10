@@ -376,7 +376,7 @@
 
 										<div id="eliminar" class="tab-pane">
 
-												{!! Form::open(['route' => 'eliminarImagen', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al usuario con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
+												{!! Form::open(['route' => 'eliminarImagen', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha eliminado la imágen con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
 												<h4>Imágen de Perfil</h4>
 												{!! Form::input('hidden', 'id', $usuario->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
@@ -391,7 +391,7 @@
 
 											<hr class="invisible half-margins" />
 
-												{!! Form::open(['route' => 'eliminarCuenta', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al usuario con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
+												{!! Form::open(['route' => 'eliminarCuenta', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha eliminado al usuario con éxito','data-toastr-position' => 'top-right', 'onsubmit' => '']) !!} 	
 												<h4>Eliminar Cuenta</h4>
 												{!! Form::input('hidden', 'id', $usuario->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 

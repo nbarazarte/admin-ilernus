@@ -75,7 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//Para el Equipo de Ilernus:
 
-		//Crear Usuario:
+		//Crear Director o Gerente:
 		Route::get('Crear-Persona-Ilernus', [
 						'uses' => 'EquipoIlernusController@crearCuenta',
 						'as' =>'registrarPi'
@@ -83,41 +83,114 @@ Route::group(['middleware' => 'auth'], function () {
 
 		Route::post('Crear-Persona-Ilernus', 'EquipoIlernusController@postCrearCuenta');
 
-		//Buscar usuarios:
+		//Buscar Director o Gerente:
 		Route::get('Buscar-Persona-Ilernus', [
 						'uses' => 'EquipoIlernusController@buscarCuenta',
 						'as' =>'buscarCuentaPi'
 		]);
 
-		//Ver Usuario:
+		//Ver Director o Gerente:
 		Route::get('Ver-Persona-Ilernus-{id}', [
 						'uses' => 'EquipoIlernusController@verCuenta',
 						'as' =>'cuentaPi'
 		]);
 
-		//Editar Usuario
+		//Editar Director o Gerente
 		Route::post('Editar-Persona-Ilernus', [
 						'uses' => 'EquipoIlernusController@editarCuenta',
 						'as' =>'editarCuentaPi'
 		]);
 
-		//Editar Imágen
+		//Editar Director o Gerente
 		Route::post('Editar-Imagen-Persona-Ilernus', [
 						'uses' => 'EquipoIlernusController@editarImagen',
 						'as' =>'editarImagenPi'
 		]);
 
-		//Eliminar Cuenta
+		//Eliminar Director o Gerente
 		Route::post('Eliminar-Cuenta-Persona-Ilernus', [
 						'uses' => 'EquipoIlernusController@eliminarCuenta',
 						'as' =>'eliminarCuentaPi'
 		]);
 
-		//Eliminar Imágen
+		//Eliminar Director o Gerente
 		Route::post('Eliminar-Imagen-Persona-Ilernus', [
 						'uses' => 'EquipoIlernusController@eliminarImagen',
 						'as' =>'eliminarImagenPi'
 		]);
+
+	//Para los Instructores de Ilernus:
+
+
+		//Crear Instructores:
+		Route::get('Crear-Instructor-Ilernus', [
+						'uses' => 'InstructoresIlernusController@crearCuenta',
+						'as' =>'registrarIns'
+		]);
+
+		Route::post('Crear-Instructor-Ilernus', 'InstructoresIlernusController@postCrearCuenta');
+
+		//Buscar Instructores:
+		Route::get('Buscar-Instructor-Ilernus', [
+						'uses' => 'InstructoresIlernusController@buscarCuenta',
+						'as' =>'buscarCuentaIns'
+		]);
+
+		//Ver Instructores:
+		Route::get('Ver-Instructor-Ilernus-{id}', [
+						'uses' => 'InstructoresIlernusController@verCuenta',
+						'as' =>'cuentaIns'
+		]);
+
+		//Editar Instructores
+		Route::post('Editar-Instructor-Ilernus', [
+						'uses' => 'InstructoresIlernusController@editarCuenta',
+						'as' =>'editarCuentaIns'
+		]);
+
+		//Editar Instructores
+		Route::post('Editar-Imagen-Instructor-Ilernus', [
+						'uses' => 'InstructoresIlernusController@editarImagen',
+						'as' =>'editarImagenIns'
+		]);
+
+		//Eliminar Instructores
+		Route::post('Eliminar-Cuenta-Instructor-Ilernus', [
+						'uses' => 'InstructoresIlernusController@eliminarCuenta',
+						'as' =>'eliminarCuentaIns'
+		]);
+
+		//Eliminar Instructores
+		Route::post('Eliminar-Imagen-Instructor-Ilernus', [
+						'uses' => 'InstructoresIlernusController@eliminarImagen',
+						'as' =>'eliminarImagenIns'
+		]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  });
 

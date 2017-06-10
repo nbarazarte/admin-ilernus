@@ -72,6 +72,7 @@
 								<thead>
 									<tr>
 										<th>Ver</th>
+										<th>Imágen</th>
 										<th>Cédula</th>
 										<th>Usuario</th>
 										<th>Nombre</th>
@@ -99,6 +100,24 @@
 													</a>
 
 												</td>
+
+
+												<td>
+													
+						                            @if ($usuario->blb_img != "")
+						                            	<img src="data:image/jpeg;base64,{{ $usuario->blb_img }}" alt="{!! $usuario->str_nombre !!}" title="{!! $usuario->str_nombre !!}" height="34">
+													@else
+
+													  @if ($usuario->str_sexo == 'Masculino')
+													  	<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">						  	
+													  @elseif ($usuario->str_sexo == 'Femenino')
+													  	<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
+													  @endif
+
+													@endif
+
+												</td>
+												
 												<td>
 														{{ $usuario->str_cedula }}
 												</td>

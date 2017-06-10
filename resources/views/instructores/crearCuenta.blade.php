@@ -12,10 +12,10 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Crear Persona de Ilernus</h1>
+					<h1>Crear Instructor de Ilernus</h1>
 					<ol class="breadcrumb">
 						<li><a href="{{ route('home')}}">Dashboard</a></li>
-						<li class="active">Crear Persona de Ilernus</li>
+						<li class="active">Crear Instructor de Ilernus</li>
 					</ol>
 				</header>
 				<!-- /page title -->
@@ -56,12 +56,12 @@
 								@endif
 
 								<div class="panel-heading panel-heading-transparent">
-									<strong>Datos de la Persona</strong>
+									<strong>Datos del Instructor</strong>
 								</div>
 
 								<div class="panel-body">
 
-								{!! Form::open(['route' => 'registrarPi', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'sky-form boxed validate', 'data-success' => 'Se ha creado la persona con éxito','data-toastr-position' => 'top-right']) !!} 										
+								{!! Form::open(['route' => 'registrarIns', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'sky-form boxed validate', 'data-success' => 'Se ha creado el Instructor con éxito','data-toastr-position' => 'top-right']) !!} 										
 
 											<fieldset>
 												
@@ -69,31 +69,6 @@
 												<input type="hidden" name="action" value="contact_send" />
 
 
-												<div class="row">
-													<div class="form-group">
-
-
-														<div class="col-md-6 col-sm-6">
-
-															<label>Tipo *</label>
-															<label class="input margin-bottom-10">
-															<i class="icon-append fa fa-user" aria-hidden="true"></i>
-
-															<select name="str_tipo" class="form-control pointer required">
-																<option value="">--- Seleccione ---</option>
-
-																<option value="director">Director</option>
-																<option value="gerencial">Gerencial</option>
-
-															</select>
-																<span class="tooltip tooltip-top-right">seleccione el género del usuario</span>
-															</label>
-														</div>
-														<div class="col-md-6 col-sm-6">
-
-														</div>
-													</div>
-												</div>
 
 												<div class="row">
 													<div class="form-group">
@@ -106,7 +81,7 @@
 															<label class="input">
 																<i class="icon-append fa fa-user"></i>
 																{!! Form::input('text', 'str_nombre', '', ['id' => 'str_nombre', 'class'=> 'form-control required','maxlength'=> '50']) !!}  
-																<span class="tooltip tooltip-top-right">Ingrese el nombre del usuario</span>
+																<span class="tooltip tooltip-top-right">Ingrese el nombre del instructor</span>
 															</label>
 														</div>
 														<div class="col-md-6 col-sm-6">
@@ -119,12 +94,12 @@
 
 																	@foreach ($generos as $value)
 																				
-																		<option value="{{ $value }}"  >{{$value}}</option>
+																		<option value="{{ $value }}">{{$value}}</option>
 
 																	@endforeach
 
 															</select>
-																<span class="tooltip tooltip-top-right">seleccione el género del usuario</span>
+																<span class="tooltip tooltip-top-right">seleccione el género del instructor</span>
 															</label>
 														</div>
 													</div>
@@ -134,51 +109,23 @@
 													<div class="form-group">
 														<div class="col-md-6 col-sm-6">
 
-															<label>Cargo *</label>
+															<label>Profesión *</label>
 	
 															<label class="input">
 																<i class="icon-append fa fa-pencil-square-o"></i>
-																{!! Form::input('text', 'str_cargo', '', ['id' => 'str_cargo', 'class'=> 'form-control required','maxlength'=> '70']) !!}  
-																<span class="tooltip tooltip-top-right">Ingrese el cargo del director</span>
+																{!! Form::input('text', 'str_profesion', '', ['id' => 'str_profesion', 'class'=> 'form-control required','maxlength'=> '70']) !!}  
+																<span class="tooltip tooltip-top-right">Ingrese la profesión del instructor</span>
 															</label>
 														</div>
 														<div class="col-md-6 col-sm-6">
-															<label>Nombre de la Imágen * (nombre_apellido)</label>
-															<label class="input">
-																<i class="icon-append fa fa-pencil-square-o"></i>
-																{!! Form::input('text', 'str_imagen', '', ['id' => 'str_imagen', 'class'=> 'form-control required','maxlength'=> '50', 'placeholder' => 'Ej.:pedro_perez']) !!}  
-																<span class="tooltip tooltip-top-right">Ingrese el nombre de la imágen</span>
-															</label>
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group">
-														<div class="col-md-12">
 															<label>
-																Imágen de Perfil
+																Imágen del Instructor
 																<small class="text-muted">(Opcional)</small>
 															</label>
 
 															{!! Form::file('blb_img',['id' => 'blb_img','data-btn-text' =>'Buscar Foto', 'class' => 'custom-file-upload']) !!}
 
-															<small class="text-muted block">Tamaño máximo: 1Mb (jpg/png)</small>												
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group">
-														<div class="col-md-12">
-															<label>
-																Curriculo *
-																<small class="text-muted">(Versión Corta)</small>
-															</label>
-
-															
-															<textarea name="str_cv_corto" class="form-control required" rows="10"></textarea>
-																										
+															<small class="text-muted block">Tamaño máximo: 1Mb (jpg/png)</small>	
 														</div>
 													</div>
 												</div>
@@ -203,7 +150,7 @@
 											<div class="row">
 												<div class="col-md-12">
 
-													{!! Form::submit('CREAR PERSONA', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
+													{!! Form::submit('CREAR INSTRUCTOR', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
 
 												</div>
 											</div>
