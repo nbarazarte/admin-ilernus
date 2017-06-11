@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Personas;
+use App\Autor;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,7 @@ use DB;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 
-class EquipoIlernusController extends Controller
+class AutoresIlernusController extends Controller
 {
    
  /**
@@ -48,7 +48,7 @@ class EquipoIlernusController extends Controller
 
         //dd($gerencias);die(); 
 
-        return \View::make('directores.crearCuenta', compact('generos'));
+        return \View::make('autores.crearCuenta', compact('generos'));
     }
 
   /**
@@ -71,8 +71,8 @@ class EquipoIlernusController extends Controller
         $this->create($request->all());
 
         //return redirect($this->redirectPath()); 
-        Session::flash('message','¡El director ha sido creado con éxito!');
-        return Redirect::to('/Crear-Equipo-iLernus'); 
+        Session::flash('message','¡El autor ha sido creado con éxito!');
+        return Redirect::to('/Crear-Autor-iLernus'); 
         
     }
 
@@ -87,12 +87,9 @@ class EquipoIlernusController extends Controller
         return Validator::make($data, [
                 
             'str_nombre' => 'required|max:255',
-            'str_sexo' => 'required|max:255',
-            'str_tipo' => 'required|max:255',
-            'str_cargo' => 'required|max:255',
-            'str_cv_corto' => 'required',            
-            'str_cv' => 'required',  
-       
+            'str_genero' => 'required|max:255',
+            'str_profesion' => 'required|max:255',        
+            'str_cv' => 'required',       
 
         ]);
     }
@@ -106,43 +103,30 @@ class EquipoIlernusController extends Controller
     protected function create(array $data)
     {
         
-        $orden = DB::table('tbl_equipoilernus')
-                ->where('str_tipo', $data['str_tipo'])
-                ->max('str_orden');
-            
-        //dd($orden);die();
-
-        $str_orden = $orden + 1;
 
         if(!empty($data['blb_img'])){
 
-            return Personas::create([
+            return Autor::create([
 
                 'lng_idadmin' =>  Auth::user()->id,
                 'str_nombre' => $data['str_nombre'],
-                'str_sexo' => $data['str_sexo'],
-                'str_cargo' => $data['str_cargo'],
-                'str_cv_corto' => $data['str_cv_corto'],
+                'str_genero' => $data['str_genero'],
+                'str_profesion' => $data['str_profesion'],
                 'str_cv' => $data['str_cv'],
-                'str_tipo' => $data['str_tipo'],
                 'blb_img' => $data['blb_img'],
                 //'blb_img' => base64_encode(file_get_contents($data['blb_img'])),
-                'str_orden' => $str_orden,
 
             ]);
 
         }else{
 
-            return Personas::create([
+            return Autor::create([
 
                 'lng_idadmin' =>  Auth::user()->id,
                 'str_nombre' => $data['str_nombre'],
-                'str_sexo' => $data['str_sexo'],
-                'str_cargo' => $data['str_cargo'],
-                'str_cv_corto' => $data['str_cv_corto'],
+                'str_genero' => $data['str_genero'],
+                'str_profesion' => $data['str_profesion'],
                 'str_cv' => $data['str_cv'],
-                'str_tipo' => $data['str_tipo'],
-                'str_orden' => $str_orden,
 
             ]);            
         }
@@ -156,16 +140,16 @@ class EquipoIlernusController extends Controller
     public function buscarCuenta()
     {
 
-        $directores = DB::table('tbl_equipoilernus as ei')
-                ->join('tbl_admin as admin', 'ei.lng_idadmin', '=', 'admin.id')
-                ->where('ei.bol_eliminado', '=' ,0)
-                ->select('ei.id','ei.str_nombre','ei.str_sexo','ei.str_tipo','ei.str_cargo', 'ei.str_orden','admin.name as usuario','ei.blb_img')
-                ->orderBy('ei.str_orden','asc')
+        $autores = DB::table('tbl_autores as au')
+                ->join('tbl_admin as admin', 'au.lng_idadmin', '=', 'admin.id')
+                ->where('au.bol_eliminado', '=' ,0)
+                ->select('au.id','au.str_nombre','au.str_genero','au.str_profesion','admin.name as usuario','au.blb_img')
+                ->orderBy('au.str_nombre','asc')
                 ->get();
 
-                //dd($directores);die();
+                //dd($autores);die();
         
-        return \View::make('directores.buscarCuenta', compact('directores'));
+        return \View::make('autores.buscarCuenta', compact('autores'));
     }
 
     /**
@@ -184,7 +168,7 @@ class EquipoIlernusController extends Controller
     public function verCuenta($id)
     {
     
-        $personas = DB::table('tbl_equipoilernus')
+        $autores = DB::table('tbl_autores')
         ->where('id', $id)
         ->Where(function ($query) {
             $query->where('bol_eliminado', '=', 0);
@@ -197,37 +181,10 @@ class EquipoIlernusController extends Controller
             $query->where('bol_eliminado', '=', 0);
         })
         ->lists('str_descripcion');
-
-        $tipopersona = DB::table('cat_datos_maestros')
-        ->where('str_tipo', 'equipoilernus')
-        ->Where(function ($query) {
-            $query->where('bol_eliminado', '=', 0);
-        })
-        ->lists('str_descripcion');        
-
-        $roles = DB::table('cat_datos_maestros')
-        ->where('str_tipo', 'rol')
-        ->Where(function ($query) {
-            $query->where('bol_eliminado', '=', 0);
-        })
-        ->lists('str_descripcion');
-
-        $gerencias = DB::table('cat_datos_maestros')
-        ->where('str_tipo', 'gerencia')
-        ->Where(function ($query) {
-            $query->where('bol_eliminado', '=', 0);
-        })
-        ->lists('str_descripcion');
-
-        $estatus = DB::table('cat_datos_maestros')
-        ->where('str_tipo', 'estatus')
-        ->Where(function ($query) {
-            $query->where('bol_eliminado', '=', 0);
-        })
-        ->lists('str_descripcion');                
+              
 
         //dd($generos);die();
-        return \View::make('directores.cuenta', compact('personas','generos', 'roles','gerencias','estatus','tipopersona'));
+        return \View::make('autores.cuenta', compact('autores','generos'));
     }
 
     public function editarCuenta(Request $request)
@@ -241,46 +198,45 @@ class EquipoIlernusController extends Controller
             );
         }*/
 
+        $autor = Autor::find($request->id);
+        $autor->fill($request->all());
+        $autor->save();
 
-     
-        $persona = Personas::find($request->id);
-        $persona->fill($request->all());
-        $persona->save();
-
-        Session::flash('message','¡Se han editado los datos personales con éxito!');
-        return Redirect::to('/Ver-Equipo-iLernus-'.$request->id); 
+        Session::flash('message','¡Se han editado los datos del autor con éxito!');
+        return Redirect::to('/Ver-Autor-iLernus-'.$request->id); 
 
     }
 
     public function editarImagen(Request $request)
     {
         
-        $persona = Personas::find($request->id);
-        $persona->fill($request->all());
-        $persona->save();
+        $autor = Autor::find($request->id);
+        $autor->fill($request->all());
+        $autor->save();
 
         Session::flash('message','¡Se ha cambiado la imágen de perfil con éxito!');
-        return Redirect::to('/Ver-Equipo-iLernus-'.$request->id); 
+        return Redirect::to('/Ver-Autor-iLernus-'.$request->id); 
 
     }
 
     public function eliminarImagen(Request $request)
     {
         
-        $imagen = DB::update('update tbl_equipoilernus set blb_img = null where id = '.$request->id.' and bol_eliminado = 0');    
+        $imagen = DB::update('update tbl_autores set blb_img = null where id = '.$request->id.' and bol_eliminado = 0');    
 
-        Session::flash('message','¡Se ha eliminado la imágen de la persona de ilernus con éxito!');
-        return Redirect::to('/Ver-Equipo-iLernus-'.$request->id); 
+        Session::flash('message','¡Se ha eliminado la imágen de perfil con éxito!');
 
+        return Redirect::to('/Ver-Autor-iLernus-'.$request->id); 
+       
     }
 
     public function eliminarCuenta(Request $request)
     {
         
-        $cuenta = DB::update('update tbl_equipoilernus set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
+        $cuenta = DB::update('update tbl_autores set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
 
-        Session::flash('message','¡Se ha eliminado la persona de ilernus con éxito!');
-        return Redirect::to('/Buscar-Equipo-iLernus'); 
+        Session::flash('message','¡Se ha eliminado la cuenta con éxito!');
+        return Redirect::to('/Buscar-Autor-iLernus'); 
 
     }
 

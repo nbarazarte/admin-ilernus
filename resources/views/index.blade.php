@@ -239,11 +239,7 @@
 							
 							<li>
 								
-								@if ($instructor->str_sexo == 'm')
-								 	<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">								  	
-								 @elseif ($instructor->str_sexo == 'f')
-									<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
-								@endif
+								<img src="data:image/jpeg;base64,{{ $instructor->blb_img }}" alt="{!! $instructor->str_nombre !!}" title="{!! $instructor->str_nombre !!}" height="34">
 
 								<b>{{ $instructor->str_nombre }}</b> : {{ $instructor->str_profesion }} 
 							</li>

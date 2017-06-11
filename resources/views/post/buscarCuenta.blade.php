@@ -15,10 +15,10 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Buscar Instructor iLernus</h1>
+					<h1>Buscar Instructor de Ilernus</h1>
 					<ol class="breadcrumb">
 					 <li><a href="{{ route('home')}}">Dashboard</a></li>
-					  <li class="active">Buscar Instructor iLernus</li>
+					  <li class="active">Buscar Instructor de Ilernus</li>
 					</ol>
 
 
@@ -89,29 +89,7 @@
 												</td>
 
 												<td>
-						                            @if ($instructor->blb_img != "")
-													  	<center>
-														  	<figure class="margin-bottom-10"><!-- image -->						                            
-						                            			<img src="data:image/jpeg;base64,{{ $instructor->blb_img }}" alt="{!! $instructor->str_nombre !!}" title="{!! $instructor->str_nombre !!}" height="34">
-						                            		</figure>
-						                            	</center>
-													@else
-
-													  @if ($instructor->str_sexo == 'Masculino')
-													  	<center>
-														  	<figure class="margin-bottom-10"><!-- image -->
-														  		<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">
-														  	</figure>
-													  	</center>						  	
-													  @elseif ($instructor->str_sexo == 'Femenino')
-													  	<center>
-														  	<figure class="margin-bottom-10"><!-- image -->
-														  		<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
-														  	</figure>
-													  	</center>
-													  @endif
-
-													 @endif	
+													<img src="data:image/jpeg;base64,{{ $instructor->blb_img }}" alt="{!! $instructor->str_nombre !!}" title="{!! $instructor->str_nombre !!}" height="34">
 												</td>												
 
 												<td>

@@ -12,10 +12,10 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Crear Instructor de Ilernus</h1>
+					<h1>Crear Instructor iLernus</h1>
 					<ol class="breadcrumb">
 						<li><a href="{{ route('home')}}">Dashboard</a></li>
-						<li class="active">Crear Instructor de Ilernus</li>
+						<li class="active">Crear Instructor iLernus</li>
 					</ol>
 				</header>
 				<!-- /page title -->

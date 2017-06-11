@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class Personas extends Model
+class Autor extends Model
 {
 
 /**
@@ -14,14 +14,14 @@ class Personas extends Model
      *
      * @var string
      */
-    protected $table = 'tbl_equipoilernus';
+    protected $table = 'tbl_autores';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['lng_idadmin','str_orden', 'str_nombre', 'str_sexo', 'str_cargo', 'str_tipo', 'str_cv_corto', 'str_cv', 'blb_img', 'bol_eliminado'];
+    protected $fillable = ['lng_idadmin', 'str_nombre', 'str_genero', 'str_profesion', 'str_cv', 'blb_img', 'bol_eliminado'];
 
     /**
      * The attributes excluded from the model's JSON form.

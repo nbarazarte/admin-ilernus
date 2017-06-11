@@ -305,7 +305,7 @@ class HomeController extends Controller
 
             return User::create([
 
-                'lng_idadmin' =>  Auth::user()->id,
+
                 'name' => $data['name'],
                 'str_cedula' => $data['str_cedula'],
                 'str_nombre' => $data['str_nombre'],
@@ -325,7 +325,7 @@ class HomeController extends Controller
         }else{
 
             return User::create([
-                'lng_idadmin' =>  Auth::user()->id,
+
                 'name' => $data['name'],
                 'str_cedula' => $data['str_cedula'],
                 'str_nombre' => $data['str_nombre'],

@@ -105,7 +105,11 @@
 												<td>
 													
 						                            @if ($usuario->blb_img != "")
-						                            	<img src="data:image/jpeg;base64,{{ $usuario->blb_img }}" alt="{!! $usuario->str_nombre !!}" title="{!! $usuario->str_nombre !!}" height="34">
+													  	<center>
+														  	<figure class="margin-bottom-10"><!-- image -->						                            
+						                            			<img src="data:image/jpeg;base64,{{ $usuario->blb_img }}" alt="{!! $usuario->str_nombre !!}" title="{!! $usuario->str_nombre !!}" height="34">
+						                            		</figure>
+						                            	</center>	
 													@else
 
 													  @if ($usuario->str_sexo == 'Masculino')

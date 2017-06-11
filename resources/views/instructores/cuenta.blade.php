@@ -14,11 +14,11 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Ver Cuenta Instructor</h1>
+					<h1>Ver Instructor iLernus</h1>
 					<ol class="breadcrumb">
 						<li><a href="{{ route('home')}}">Dashboard</a></li>
-						<li><a href="{{ route('buscarCuentaIns')}}">Buscar Cuenta Instructor</a></li>
-						<li class="active">Ver Cuenta Instructor</li>
+						<li><a href="{{ route('buscarCuentaIns')}}">Buscar Instructor iLernus</a></li>
+						<li class="active">Ver Instructor iLernus</li>
 					</ol>
 				</header>
 
@@ -263,7 +263,7 @@
 
 											<hr class="invisible half-margins" />
 
-												{!! Form::open(['route' => 'eliminarCuentaIns', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al instructor con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
+												{!! Form::open(['route' => 'eliminarCuentaIns', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se ha eliminado con éxito a la persona','data-toastr-position' => 'top-right', 'onsubmit' => '']) !!} 		
 												<h4>Eliminar Cuenta</h4>
 												{!! Form::input('hidden', 'id', $instructor->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 

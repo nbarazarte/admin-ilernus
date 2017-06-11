@@ -72,7 +72,7 @@ class InstructoresIlernusController extends Controller
 
         //return redirect($this->redirectPath()); 
         Session::flash('message','¡El instructor ha sido creado con éxito!');
-        return Redirect::to('/Crear-Instructor-Ilernus'); 
+        return Redirect::to('/Crear-Instructor-iLernus'); 
         
     }
 
@@ -90,8 +90,7 @@ class InstructoresIlernusController extends Controller
             'str_sexo' => 'required|max:255',
             'str_profesion' => 'required|max:255',        
             'str_cv' => 'required',  
-            'blb_img' => 'required|max:255',           
-
+        
         ]);
     }
 
@@ -204,7 +203,7 @@ class InstructoresIlernusController extends Controller
         $instructor->save();
 
         Session::flash('message','¡Se han editado los datos del Instructor con éxito!');
-        return Redirect::to('/Ver-Instructor-Ilernus-'.$request->id); 
+        return Redirect::to('/Ver-Instructor-iLernus-'.$request->id); 
 
     }
 
@@ -216,7 +215,7 @@ class InstructoresIlernusController extends Controller
         $instructor->save();
 
         Session::flash('message','¡Se ha cambiado la imágen de perfil con éxito!');
-        return Redirect::to('/Ver-Instructor-Ilernus-'.$request->id); 
+        return Redirect::to('/Ver-Instructor-iLernus-'.$request->id); 
 
     }
 
@@ -226,7 +225,7 @@ class InstructoresIlernusController extends Controller
         $imagen = DB::update('update tbl_instructores set blb_img = null where id = '.$request->id.' and bol_eliminado = 0');    
 
         Session::flash('message','¡Se ha eliminado la imágen de perfil con éxito!');
-        return Redirect::to('/Ver-Instructor-Ilernus-'.$request->id); 
+        return Redirect::to('/Ver-Instructor-iLernus-'.$request->id); 
 
     }
 
@@ -236,7 +235,7 @@ class InstructoresIlernusController extends Controller
         $cuenta = DB::update('update tbl_instructores set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
 
         Session::flash('message','¡Se ha eliminado la cuenta con éxito!');
-        return Redirect::to('/Buscar-Instructor-Ilernus'); 
+        return Redirect::to('/Buscar-Instructor-iLernus'); 
 
     }
 

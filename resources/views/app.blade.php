@@ -287,9 +287,6 @@
 							},
 							{
 								"orderable": true
-							},
-							{
-								"orderable": true
 							},														
 							{
 								"orderable": true

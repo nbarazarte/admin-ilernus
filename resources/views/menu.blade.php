@@ -74,17 +74,35 @@
 							</ul>
 						</li>						
 
-
 						<li>
 							<a href="#">
 								<i class="fa fa-menu-arrow pull-right"></i>
 								<i class="main-icon fa fa-rss"></i> <span>Blog</span>
 							</a>
 							<ul><!-- submenus -->
-								<li><a href="#">Nuevo</a></li>
-								<li><a href="#">Buscar</a></li>
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										Autores
+									</a>
+									<ul>
+										<li><a href="{{ route('registrarAu')}}">Nuevo</a></li>
+										<li><a href="{{ route('buscarCuentaAu')}}">Buscar</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										Post
+									</a>
+									<ul>
+										<li><a href="">Nuevo</a></li>
+										<li><a href="">Buscar</a></li>
+									</ul>
+								</li>
 							</ul>
-						</li>						
+						</li>												
 
 					</ul>
 

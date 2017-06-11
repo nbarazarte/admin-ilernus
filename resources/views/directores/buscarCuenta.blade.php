@@ -15,10 +15,10 @@
 
 				<!-- page title -->
 				<header id="page-header">
-					<h1>Buscar Persona iLernus</h1>
+					<h1>Buscar Equipo iLernus</h1>
 					<ol class="breadcrumb">
 					 <li><a href="{{ route('home')}}">Dashboard</a></li>
-					  <li class="active">Buscar Persona iLernus</li>
+					  <li class="active">Buscar Equipo iLernus</li>
 					</ol>
 
 
@@ -70,7 +70,6 @@
 										<th>Cargo</th>
 										<th>Tipo</th>
 										<th>Orden</th>
-										<th>Nombre de la Imágen</th>
 										<th>Usuario</th>
 									</tr>
 								</thead>
@@ -94,13 +93,25 @@
 												<td>
 													
 						                            @if ($director->blb_img != "")
-						                            	<img src="data:image/jpeg;base64,{{ $director->blb_img }}" alt="{!! $director->str_nombre !!}" title="{!! $director->str_nombre !!}" height="34">
+						                            	<center>
+														  	<figure class="margin-bottom-10"><!-- image -->
+						                            			<img src="data:image/jpeg;base64,{{ $director->blb_img }}" alt="{!! $director->str_nombre !!}" title="{!! $director->str_nombre !!}" height="34">
+						                            		</figure>
+						                            	</center>
 													@else
 
 													  @if ($director->str_sexo == 'Masculino')
-													  	<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">						  	
+													  	<center>
+														  	<figure class="margin-bottom-10"><!-- image -->
+													  			<img src="{{ asset('smarty/assets/images/user_masculino.png') }}" alt="" height="34">
+													  		</figure>
+													  	</center>					  	
 													  @elseif ($director->str_sexo == 'Femenino')
-													  	<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
+													  	<center>
+														  	<figure class="margin-bottom-10"><!-- image -->
+													  			<img src="{{ asset('smarty/assets/images/user_femenino.png') }}" alt="" height="34">
+													  		</figure>
+													  	</center>
 													  @endif
 
 													@endif
@@ -123,10 +134,6 @@
 												</td>												
 												<td>
 													 	{{ $director->str_orden }}
-												</td>
-
-												<td>
-													 	{{ $director->str_imagen }}
 												</td>
 
 												<td>

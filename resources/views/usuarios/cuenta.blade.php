@@ -391,7 +391,7 @@
 
 											<hr class="invisible half-margins" />
 
-												{!! Form::open(['route' => 'eliminarCuenta', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha eliminado al usuario con éxito','data-toastr-position' => 'top-right', 'onsubmit' => '']) !!} 	
+												{!! Form::open(['route' => 'eliminarCuenta', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se ha eliminado con éxito a la persona','data-toastr-position' => 'top-right', 'onsubmit' => '']) !!} 	
 												<h4>Eliminar Cuenta</h4>
 												{!! Form::input('hidden', 'id', $usuario->id, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
