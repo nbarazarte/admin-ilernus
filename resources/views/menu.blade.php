@@ -97,8 +97,8 @@
 										Post
 									</a>
 									<ul>
-										<li><a href="">Nuevo</a></li>
-										<li><a href="">Buscar</a></li>
+										<li><a href="{{ route('registrarPost')}}">Nuevo</a></li>
+										<li><a href="{{ route('buscarPost')}}">Buscar</a></li>
 									</ul>
 								</li>
 							</ul>

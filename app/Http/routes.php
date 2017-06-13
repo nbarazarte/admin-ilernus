@@ -213,22 +213,56 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+	//Para los Post de iLernus:
+
+		//Crear Post:
+		Route::get('Crear-Post-iLernus', [
+						'uses' => 'PostController@crearPost',
+						'as' =>'registrarPost'
+		]);
+
+		Route::post('Crear-Post-iLernus', 'PostController@postCrearPost');
 
 
 
+		//Buscar Post:
+		Route::get('Buscar-Post-iLernus', [
+						'uses' => 'PostController@buscarPost',
+						'as' =>'buscarPost'
+		]);
 
 
+		//Ver Post:
+		Route::get('Ver-Post-iLernus-{id}', [
+						'uses' => 'PostController@verPost',
+						'as' =>'verPost'
+		]);
 
 
+		//Editar Post
+		Route::post('Editar-Post-iLernus', [
+						'uses' => 'PostController@editarPost',
+						'as' =>'editarPost'
+		]);
 
 
+		//Editar Post multimedia: una imagen
+		Route::post('Editar-Post-Multimedia-iLernus', [
+						'uses' => 'PostController@editarMultimedia',
+						'as' =>'editarMu'
+		]);
 
+		//Editar Post multimedia: carrusel
+		Route::post('Editar-Post-Multimedia2-iLernus', [
+						'uses' => 'PostController@editarMultimedia2',
+						'as' =>'editarMu2'
+		]);
 
-
-
-
-
-
+		//Editar Post multimedia: audio y video
+		Route::post('Editar-Post-Multimedia3-iLernus', [
+						'uses' => 'PostController@editarMultimedia3',
+						'as' =>'editarMu3'
+		]);
 
 
 
