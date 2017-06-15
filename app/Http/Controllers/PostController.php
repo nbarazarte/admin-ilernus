@@ -126,6 +126,7 @@ class PostController extends Controller
             'str_titulo' => $titulo,
             'str_post_resumen' => $data['str_post_resumen'],
             'str_post' => $data['str_post'],
+            'str_estatus' => 'inactivo',
             ]);
 
         }else if($data['str_tipo'] == 'imagen'){ 
@@ -140,7 +141,7 @@ class PostController extends Controller
             'str_post_resumen' => $data['str_post_resumen'],
             'str_post' => $data['str_post'],
             'blb_img1' => $img1,
-
+            'str_estatus' => 'inactivo',
             ]); 
 
         }else if($data['str_tipo'] == 'carrusel-imagen'){
@@ -165,7 +166,7 @@ class PostController extends Controller
             'blb_img1' => $img1,
             'blb_img2' => $img2,
             'blb_img3' => $img3,
-
+            'str_estatus' => 'inactivo',
             ]); 
 
         }else if($data['str_tipo'] == 'video'){
@@ -178,6 +179,7 @@ class PostController extends Controller
             'str_post_resumen' => $data['str_post_resumen'],
             'str_post' => $data['str_post'],
             'str_video' => $data['str_video'],
+            'str_estatus' => 'inactivo',
             ]); 
 
         }else if($data['str_tipo'] == 'audio'){
@@ -190,6 +192,7 @@ class PostController extends Controller
             'str_post_resumen' => $data['str_post_resumen'],
             'str_post' => $data['str_post'],
             'str_audio' => $data['str_audio'],
+            'str_estatus' => 'inactivo',
             ]); 
 
         }
@@ -236,8 +239,9 @@ class PostController extends Controller
 
         $posts = DB::table('tbl_post as p')
                 ->join('tbl_autores as au', 'au.id', '=', 'p.lng_idautor')
+                ->join('tbl_admin as adm', 'adm.id', '=', 'p.lng_idadmin')
                 ->where('p.bol_eliminado', '=' ,0)
-                ->select('p.id as idpost','p.str_titulo', 'p.str_post', 'p.str_post_resumen', 'p.str_tipo', 'p.str_video','p.str_audio', 'p.blb_img1', 'p.blb_img2', 'p.blb_img3', 'p.created_at as fecha', 'au.id', 'au.str_nombre as autor', 'au.str_genero', 'au.str_profesion', 'au.str_cv', 'au.blb_img')
+                ->select('p.id as idpost','p.str_estatus','adm.name as usuario','adm.blb_img as img_usuario','p.str_titulo', 'p.str_post', 'p.str_post_resumen', 'p.str_tipo', 'p.str_video','p.str_audio', 'p.blb_img1', 'p.blb_img2', 'p.blb_img3', 'p.created_at as fecha', 'au.id', 'au.str_nombre as autor', 'au.str_genero', 'au.str_profesion', 'au.str_cv', 'au.blb_img')
                 ->orderBy('p.id','asc')
                 ->get();
 
@@ -248,29 +252,18 @@ class PostController extends Controller
         return \View::make('post.buscarPost', compact('posts'));
     }
 
-
-
-
-
-
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function estatusUsuario($id, $estatus)
+    public function estatusPost($id, $estatus)
     {
     
-        $estatusUsuario = DB::update('update tbl_admin set str_estatus = "'.$estatus.'", lng_idadmin = '.Auth::user()->id.' where id = '.$id.' and bol_eliminado = 0');
+        $estatusPost = DB::update('update tbl_post set str_estatus = "'.$estatus.'", lng_idadmin = '.Auth::user()->id.' where id = '.$id.' and bol_eliminado = 0');
          
-        return $estatusUsuario;
+        return $estatusPost;
     }
-
-
-
-
-
-
 
     public function verPost($id)
     {
@@ -282,15 +275,10 @@ class PostController extends Controller
             $query->where('p.bol_eliminado', '=', 0);
         })
 
-        ->select( 'p.id as idpost','p.str_tipo', 'p.created_at as fecha','p.str_titulo', 'p.str_post', 'p.str_post_resumen','p.str_video', 'p.str_audio', 'p.blb_img1', 'p.blb_img2', 'p.blb_img3', 'a.str_nombre as autor')
+        ->select( 'p.id as idpost','p.str_estatus','p.str_tipo', 'p.created_at as fecha','p.str_titulo', 'p.str_post', 'p.str_post_resumen','p.str_video', 'p.str_audio', 'p.blb_img1', 'p.blb_img2', 'p.blb_img3', 'a.str_nombre as autor')
 
         ->orderBy('p.id', 'desc')
         ->get(); 
-
-        $categorias = DB::table('tbl_categorias_post as cat')
-        ->join('tbl_post as p', 'p.id', '=', 'cat.lng_idpost')
-        ->where('p.id', '=', $id)
-        ->get();
               
         $autores = DB::table('tbl_autores')
             ->orderBy('str_nombre', 'asc')
@@ -304,8 +292,14 @@ class PostController extends Controller
             ->orderBy('id', 'asc')
             ->lists('str_descripcion');
 
+        $tipoEstatus = DB::table('cat_datos_maestros')
+            ->where('str_tipo', 'estatus_post')
+            ->where('bol_eliminado', '=', 0)
+            ->orderBy('id', 'asc')
+            ->lists('str_descripcion');
 
-        $etiquetas = DB::table('cat_datos_maestros')
+
+        $todasEtiquetas = DB::table('cat_datos_maestros')
             ->where('str_tipo', '=' ,'etiqueta')
             ->Where(function ($query) {
                 $query->where('bol_eliminado', '=', 0);
@@ -314,8 +308,16 @@ class PostController extends Controller
             ->select('str_descripcion','id')
             ->lists('str_descripcion','id');
 
-        //dd($autores);die();
-        return \View::make('post.post', compact('posts','categorias','autores','tipopost','etiquetas'));
+
+        $etiquetas = DB::table('tbl_categorias_post as cat')
+        ->where('cat.lng_idpost', '=', $id)
+        ->orderBy('str_categoria')
+        ->select('str_categoria')
+        ->lists('str_categoria');          
+
+        //dd($todasEtiquetas);
+
+        return \View::make('post.post', compact('posts','categorias','autores','tipopost','todasEtiquetas','etiquetas','tipoEstatus'));
     }
 
     public function editarPost(Request $request)
@@ -396,26 +398,42 @@ class PostController extends Controller
 
     }
 
-
-
-    public function eliminarImagen(Request $request)
+    public function editarEtiquetas(Request $request)
     {
         
-        $imagen = DB::update('update tbl_post set blb_img = null where id = '.$request->id.' and bol_eliminado = 0');    
+        $categoriasPostActuales = DB::table('tbl_categorias_post')
+            ->where('lng_idpost', '=', $request->id)
+            ->delete();
 
-        Session::flash('message','¡Se ha eliminado la imágen de perfil con éxito!');
+        //dd($request);die();
 
-        return Redirect::to('/Ver-Autor-iLernus-'.$request->id); 
-       
+        $categorias = array_values($request->str_categoria);
+        
+        $total_categorias = count($categorias);
+        
+        for ($i = 0; $i <= $total_categorias - 1; $i++)
+        {
+            $categoriasPost = Categoria::create([
+                'lng_idpost' => $request->id,
+                'str_categoria' => $categorias[$i],
+            ]);
+        }
+
+     
+
+        Session::flash('message','¡Se han editado las etiquetas con éxito!');
+        return Redirect::to('/Ver-Post-iLernus-'.$request->id); 
+
     }
 
-    public function eliminarCuenta(Request $request)
+
+    public function eliminarPost(Request $request)
     {
         
-        $cuenta = DB::update('update tbl_post set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
+        $post = DB::update('update tbl_post set bol_eliminado = 1 where id = '.$request->id.' and bol_eliminado = 0');
 
-        Session::flash('message','¡Se ha eliminado la cuenta con éxito!');
-        return Redirect::to('/Buscar-Autor-iLernus'); 
+        Session::flash('message','¡Se ha eliminado el post con éxito!');
+        return Redirect::to('/Buscar-Post-iLernus'); 
 
     }
 

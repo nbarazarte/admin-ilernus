@@ -224,6 +224,13 @@
 												<fieldset>
 
 													<div class="form-group">
+														<label class="col-md-3 control-label" for="">Estatus</label>
+														<div class="col-md-8">
+															<input type="text" readonly="yes" class="form-control" id="" value="{{ str_replace("-"," ",$post->str_estatus)}}">
+														</div>
+													</div>
+
+													<div class="form-group">
 														<label class="col-md-3 control-label" for="">Título</label>
 														<div class="col-md-8">
 															<input type="text" readonly="yes" class="form-control" id="" value="{{ str_replace("-"," ",$post->str_titulo)}}">
@@ -270,11 +277,27 @@
 										<div id="editar" class="tab-pane">
 
 											{!! Form::open(['route' => 'editarPost', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se han editado los datos personales con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload()']) !!} 												
-												<h4>Datos Personales</h4>
+												<h4>Datos del Post</h4>
 
 												{!! Form::input('hidden', 'id', $post->idpost, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
 												<fieldset>
+
+													<div class="form-group">
+														<label class="col-md-3 control-label" for="str_profesion">Estatus</label>
+														<div class="col-md-8">
+															<select name="str_estatus" class="form-control pointer required">
+																<option value="">--- Seleccione ---</option>
+
+																@foreach ($tipoEstatus as $value)
+																				
+																<option value="{{$value}}" <?php if ($value == $post->str_estatus) {?> selected <?php }?> >{{$value}}</option>
+
+																@endforeach
+
+															</select>
+														</div>
+													</div>
 
 													<div class="form-group">
 														<label class="col-md-3 control-label" for="str_nombre">Título</label>
@@ -335,6 +358,11 @@
 
 										<div id="editarEtiquetas" class="tab-pane">
 
+											{!! Form::open(['route' => 'editarEtiquetas', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se han editado las etiquetas con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload()']) !!} 												
+												
+
+												{!! Form::input('hidden', 'id', $post->idpost, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  										
+
 											<div class="row">
 
 												<fieldset>
@@ -352,15 +380,35 @@
 														<?php
 															$x = 0;
 														?>
-														@foreach($etiquetas as $clave => $valor)
+														@foreach($todasEtiquetas as $clave => $valor)
 										
 															<div class="col-md-4">
 
-			                                                    {!! Form::checkbox("str_categoria", $valor) !!}
+															<?php $flag = 'false'; ?>   
+															@foreach($etiquetas as $tag)
+
+																@if($valor == $tag)
+
+																	{!! Form::checkbox("str_categoria[]", $valor,'checked') !!}
+													                                                            
+													                <?php $flag = 'true'; ?>
+
+			                                                	@endif
+
+			                                                @endforeach
+
+ 															@if($flag == 'false')
+								                                                            
+								                            	{!! Form::checkbox("str_categoria[]", $valor) !!}
+	           		                                                                          		           		                                                                          	
+	                                                        @endif  
+
 			                                                    {!! Form::label('str_categoria', $valor) !!}           
 
 															</div>
+
 															<?php $x++; ?>
+
 														@endforeach
 
 														</div>
@@ -372,6 +420,14 @@
 												</fieldset>
 
 											</div>
+
+												<div class="row">
+													<div class="col-md-9 col-md-offset-3">
+														{!! Form::submit('MODIFICAR ETIQUETAS', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
+													</div>
+												</div>	
+
+											{!! Form::close() !!}
 
 										</div>
 
@@ -429,29 +485,15 @@
 
 										<div id="eliminar" class="tab-pane">
 
-												{!! Form::open(['route' => 'eliminarImagenIns', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al instructor con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
-												<h4>Imágen de Perfil</h4>
+
+												{!! Form::open(['route' => 'eliminarPost', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal ', 'data-success' => 'Se ha eliminado el post con éxito','data-toastr-position' => 'top-right', 'onsubmit' => '']) !!} 	
+												<h4>Eliminar Post</h4>
 												{!! Form::input('hidden', 'id', $post->idpost, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
 
 
 												<div class="row">
 													<div class="col-md-9 col-md-offset-3">
-														{!! Form::submit('ELIMINAR IMÁGEN', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
-													</div>
-												</div>
-
-												{!! Form::close() !!}
-
-											<hr class="invisible half-margins" />
-
-												{!! Form::open(['route' => 'eliminarCuentaIns', 'id' => 'clave-form', '', 'enctype'=>'multipart/form-data', 'class' => 'form-horizontal validate', 'data-success' => 'Se ha enviado la nueva clave al instructor con éxito','data-toastr-position' => 'top-right', 'onsubmit' => 'location.reload();']) !!} 	
-												<h4>Eliminar Cuenta</h4>
-												{!! Form::input('hidden', 'id', $post->idpost, ['id' => 'id', 'class'=> 'form-control required','maxlength'=> '10', 'readonly' ]) !!}  
-
-
-												<div class="row">
-													<div class="col-md-9 col-md-offset-3">
-														{!! Form::submit('ELIMINAR CUENTA', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
+														{!! Form::submit('ELIMINAR POST', ['class' => 'btn btn-3d btn-teal btn-xlg btn-block margin-top-30']) !!}
 													</div>
 												</div>
 

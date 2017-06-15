@@ -112,21 +112,16 @@
 
 															<div class="row">
 
-															<?php
-																$x = 0;
-															?>
 															@foreach($etiquetas as $clave => $valor)
 											
 																<div class="col-md-4">
 
-																
-																	
 			                                                        {!! Form::checkbox("str_categoria", $valor) !!}
 			                                                        {!! Form::label('str_categoria', $valor) !!}           
 
 																</div>
-																<?php $x++; ?>
-																@endforeach
+
+															@endforeach
 
 															</div>
 

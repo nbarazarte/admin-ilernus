@@ -69,6 +69,8 @@
 										<th>Tipo</th>
 										<th>Autor</th>
 										<th>Fecha</th>
+										<th>Estatus</th>
+										<th>Usuario</th>
 									</tr>
 								</thead>
 
@@ -152,6 +154,24 @@
 
 												<td>
 													 	{{ $post->fecha }}
+												</td>
+
+												<td> 
+														{{ $post->str_estatus }}
+												</td>
+												
+												<td> 
+														<div class="row">
+															<div class="col-md-4">
+															  	<center>
+																  	<figure class="margin-bottom-10"><!-- image -->
+																		<img src="data:image/jpeg;base64,{{ $post->img_usuario }}" alt="" title="" height="34">
+																	</figure>
+																</center>
+															</div>
+															<div class="col-md-8">{{ $post->usuario }}</div>
+														</div>
+
 												</td>
 
 										</tr>

@@ -205,7 +205,7 @@ Route::group(['middleware' => 'auth'], function () {
 						'as' =>'eliminarCuentaAu'
 		]);
 
-		//Eliminar Autor
+		//Eliminar Imágen Autor
 		Route::post('Eliminar-Imagen-Autor-iLernus', [
 						'uses' => 'AutoresIlernusController@eliminarImagen',
 						'as' =>'eliminarImagenAu'
@@ -270,7 +270,17 @@ Route::group(['middleware' => 'auth'], function () {
 						'as' =>'editarMu3'
 		]);
 
+		//Editar Post Etiquetas:
+		Route::post('Editar-Post-Etiquetas-iLernus', [
+						'uses' => 'PostController@editarEtiquetas',
+						'as' =>'editarEtiquetas'
+		]);
 
+		//Eliminar Post
+		Route::post('Eliminar-Post-iLernus', [
+						'uses' => 'PostController@eliminarPost',
+						'as' =>'eliminarPost'
+		]);
 
 
 
