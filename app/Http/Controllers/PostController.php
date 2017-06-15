@@ -47,10 +47,19 @@ class PostController extends Controller
         ->orderBy('str_nombre')
         ->select('str_nombre','id')
         ->lists('str_nombre','id');
-    
-        //dd($autores);die(); 
 
-        return \View::make('post.crearPost', compact('autores'));
+        $etiquetas = DB::table('cat_datos_maestros')
+        ->where('str_tipo', '=' ,'etiqueta')
+        ->Where(function ($query) {
+            $query->where('bol_eliminado', '=', 0);
+        })              
+        ->orderBy('str_descripcion')
+        ->select('str_descripcion','id')
+        ->lists('str_descripcion','id');
+
+        //dd($etiquetas);die(); 
+
+        return \View::make('post.crearPost', compact('autores','etiquetas'));
     }
 
   /**
@@ -187,22 +196,33 @@ class PostController extends Controller
 
         $lastInsertedId = $post->id;
 
-        //dd($data['str_categoria']);
-        //die();
 
-        $categorias = array_values($data['str_categoria']);
-        
-        $total_categorias = count($categorias);
-        
-        for ($i = 0; $i <= $total_categorias - 1; $i++)
-        {
-            $categoriasPost = Categoria::create([
-                'lng_idpost' => $lastInsertedId,
-                'str_categoria' => $categorias[$i],
-            ]);
+        if(!empty($data['str_categoria'])){
+
+            //dd($data['str_categoria']);
+            //die();
+
+            $categorias = array_values($data['str_categoria']);
+            
+            $total_categorias = count($categorias);
+            
+            for ($i = 0; $i <= $total_categorias - 1; $i++)
+            {
+                $categoriasPost = Categoria::create([
+                    'lng_idpost' => $lastInsertedId,
+                    'str_categoria' => $categorias[$i],
+                ]);
+            }
+
+            return $categoriasPost;
+
+        }else{
+
+            return $post;
+
         }
 
-        return $categoriasPost;
+
   
     }
 
@@ -220,7 +240,10 @@ class PostController extends Controller
                 ->select('p.id as idpost','p.str_titulo', 'p.str_post', 'p.str_post_resumen', 'p.str_tipo', 'p.str_video','p.str_audio', 'p.blb_img1', 'p.blb_img2', 'p.blb_img3', 'p.created_at as fecha', 'au.id', 'au.str_nombre as autor', 'au.str_genero', 'au.str_profesion', 'au.str_cv', 'au.blb_img')
                 ->orderBy('p.id','asc')
                 ->get();
-                //dd($posts);die();
+
+
+
+            //dd($posts);die();
         
         return \View::make('post.buscarPost', compact('posts'));
     }
@@ -281,8 +304,18 @@ class PostController extends Controller
             ->orderBy('id', 'asc')
             ->lists('str_descripcion');
 
+
+        $etiquetas = DB::table('cat_datos_maestros')
+            ->where('str_tipo', '=' ,'etiqueta')
+            ->Where(function ($query) {
+                $query->where('bol_eliminado', '=', 0);
+            })              
+            ->orderBy('str_descripcion')
+            ->select('str_descripcion','id')
+            ->lists('str_descripcion','id');
+
         //dd($autores);die();
-        return \View::make('post.post', compact('posts','categorias','autores','tipopost'));
+        return \View::make('post.post', compact('posts','categorias','autores','tipopost','etiquetas'));
     }
 
     public function editarPost(Request $request)
@@ -310,15 +343,12 @@ class PostController extends Controller
     {
         
         $blb_img1 = base64_encode(file_get_contents($request->blb_img1));
-
-        $publicacion = DB::update("update tbl_post set blb_img1 = '".$blb_img1."' where id = ".$request->id);
+        $publicacion = DB::update("update tbl_post set str_tipo = '".$request->str_tipo."', blb_img1 = '".$blb_img1."' where id = ".$request->id);
 
         Session::flash('message','¡Se ha cambiado la imágen del post con éxito!');
         return Redirect::to('/Ver-Post-iLernus-'.$request->id); 
 
     }
-
-
 
     public function editarMultimedia2(Request $request)
     {
@@ -327,7 +357,7 @@ class PostController extends Controller
         $blb_img2 = base64_encode(file_get_contents($request->blb_img2));
         $blb_img3 = base64_encode(file_get_contents($request->blb_img3));
 
-        $publicacion = DB::update("update tbl_post set blb_img1 = '".$blb_img1."', blb_img2 = '".$blb_img2."', blb_img3 = '".$blb_img3."' where id = ".$request->id);
+        $publicacion = DB::update("update tbl_post set str_tipo = '".$request->str_tipo."', blb_img1 = '".$blb_img1."', blb_img2 = '".$blb_img2."', blb_img3 = '".$blb_img3."' where id = ".$request->id);
 
         Session::flash('message','¡Se ha cambiado la imágen del post con éxito!');
         return Redirect::to('/Ver-Post-iLernus-'.$request->id); 
@@ -346,7 +376,25 @@ class PostController extends Controller
 
     }
 
+    public function editarMultimedia4(Request $request)
+    {
+        
+        /*$validator = $this->validator($request->all());
 
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }*/
+
+        $post = Post::find($request->id);
+        $post->fill($request->all());
+        $post->save();
+
+        Session::flash('message','¡Se ha quitado el contenido multimedia con éxito!');
+        return Redirect::to('/Ver-Post-iLernus-'.$request->id); 
+
+    }
 
 
 

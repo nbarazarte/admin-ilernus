@@ -104,75 +104,36 @@
 															</label>
 														</div>
 
-
 														<div class="col-md-6 col-sm-6">
-															<label>Etiquetas *</label>
-	
+															<label>Etiquetas</label>
+															
+															<input class="pull-right" type="checkbox" name="categoria" value="" onclick="todasEtiquetas()">
+															<label class="pull-right"> Seleccionar todas &nbsp;</label>
 
-				                                                <ul class="">
-				                        
-				                                                    <li class="">
-				                                                        <label>
-				                                                            
-				                                                        	{!! Form::checkbox("str_categoria[1]", 'Educación') !!}
-				                                                            {!! Form::label('str_categoria', 'Educación') !!}
-				                                                                   
-				                                                        </label>
-				                                                    </li>
+															<div class="row">
 
-				                                                    <li class="">
-				                                                        <label>
-				                                                            
-				                                                        	{!! Form::checkbox("str_categoria[2]", 'Deportes') !!}
-				                                                            {!! Form::label('str_categoria', 'Deportes') !!}
-				                                                                   
-				                                                        </label>
-				                                                    </li>
+															<?php
+																$x = 0;
+															?>
+															@foreach($etiquetas as $clave => $valor)
+											
+																<div class="col-md-4">
 
-				                                                    <li class="">
-				                                                        <label>
-				                                                            
-				                                                        	{!! Form::checkbox("str_categoria[3]", 'Cultura') !!}
-				                                                            {!! Form::label('str_categoria', 'Cultura') !!}
-				                                                                   
-				                                                        </label>
-				                                                    </li>
+																
+																	
+			                                                        {!! Form::checkbox("str_categoria", $valor) !!}
+			                                                        {!! Form::label('str_categoria', $valor) !!}           
 
-				                                                    <li class="">
-				                                                        <label>
-				                                                            
-				                                                        	{!! Form::checkbox("str_categoria[4]", 'Entretenimiento') !!}
-				                                                            {!! Form::label('str_categoria', 'Entretenimiento') !!}
-				                                                                   
-				                                                        </label>
-				                                                    </li>
+																</div>
+																<?php $x++; ?>
+																@endforeach
 
-				                                                    <li class="">
-				                                                        <label>
-				                                                            
-				                                                        	{!! Form::checkbox("str_categoria[5]", 'Tecnología') !!}
-				                                                            {!! Form::label('str_categoria', 'Tecnología') !!}
-				                                                                   
-				                                                        </label>
-				                                                    </li>
-
-				                                                </ul>
-
-
-
-
-
-
-
-
+															</div>
 
 														</div>
 
 													</div>
 												</div>
-
-
-
 
 												<div class="row">
 													<div class="form-group">
@@ -276,10 +237,34 @@
 			</section>
 			<!-- /MIDDLE -->
 
-
-
 <script type="text/javascript">
 
+	function todasEtiquetas() {
+
+		var categoria = document.getElementsByName("categoria");
+
+		if(categoria[0].checked == true){
+
+		    var x = document.getElementsByName("str_categoria");
+		    var i;
+		    for (i = 0; i < x.length; i++) {
+		        if (x[i].type == "checkbox") {
+		            x[i].checked = true;
+		        }
+		    }
+
+		}else{
+
+		    var x = document.getElementsByName("str_categoria");
+		    var i;
+		    for (i = 0; i < x.length; i++) {
+		        if (x[i].type == "checkbox") {
+		            x[i].checked = false;
+		        }
+		    }
+
+		}
+	}
 
 	function showfieldTipo(name){
 
@@ -312,11 +297,11 @@
 
 		if(name=='youtube'){
 	  	
-	  		document.getElementById('div1').innerHTML='<label class="input"><i class="icon-append fa fa-youtube-play" aria-hidden="true"></i><input type="text" class="form-control pointer required" name="str_video" placeholder="Ejemplo: http://www.youtube.com/embed/W7Las-MJnJo"/><span class="tooltip tooltip-top-right">Ingrese el link de Youtube</span></label>';
+	  		document.getElementById('div1').innerHTML='<textarea id="str_video" name="str_video" class="form-control required" placeholder="Ejemplo: <iframe class=embed-responsive-item width=560 height=315 src=http://www.youtube.com/embed/W7Las-MJnJo></iframe>" rows="4" cols="350"></textarea><span class="tooltip tooltip-top-right">Ingrese el link de video</span>';
 
 	  	}else if (name=='vimeo'){ 
 
-	  		document.getElementById('div1').innerHTML='<label class="input"><i class="icon-append fa fa-vimeo" aria-hidden="true"></i><input type="text" class="form-control pointer required" name="str_video" placeholder="Ejemplo: http://player.vimeo.com/video/8408210"/><span class="tooltip tooltip-top-right">Ingrese el link de Vimeo</span></label>';
+	  		document.getElementById('div1').innerHTML='<textarea id="str_video" name="str_video" class="form-control required" placeholder="Ejemplo: <iframe class=embed-responsive-item src=http://player.vimeo.com/video/8408210 width=800 height=450></iframe>" rows="4" cols="350"></textarea><span class="tooltip tooltip-top-right">Ingrese el link de video</span>';
 
 		}
 

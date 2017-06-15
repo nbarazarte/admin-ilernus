@@ -105,7 +105,7 @@
 													  @elseif ($post->str_tipo == 'video')
 														<div class="margin-bottom-20">
 															<div class="embed-responsive embed-responsive-16by9">
-																<iframe class="embed-responsive-item" src="{{ $post->str_video }}" width="100" height="50"></iframe>
+																{!! html_entity_decode($post->str_video) !!}
 															</div>
 														</div>	
 													  @elseif ($post->str_tipo == 'simple')

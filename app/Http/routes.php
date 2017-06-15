@@ -246,6 +246,12 @@ Route::group(['middleware' => 'auth'], function () {
 		]);
 
 
+		//Editar Post multimedia: simple
+		Route::post('Editar-Post-Multimedia4-iLernus', [
+						'uses' => 'PostController@editarMultimedia4',
+						'as' =>'editarMu4'
+		]);
+
 		//Editar Post multimedia: una imagen
 		Route::post('Editar-Post-Multimedia-iLernus', [
 						'uses' => 'PostController@editarMultimedia',

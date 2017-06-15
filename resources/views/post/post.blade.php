@@ -4,22 +4,79 @@
 
 @include('menu')
 
-		@foreach ($posts as $post)
+	@foreach ($posts as $post)
 
-		@endforeach
+	@endforeach
 
+	@if($post->str_tipo == 'simple')
 
-	<style type="text/css">
+		<style type="text/css">
 
-		#simple {display: none;}
-		#imagen {display: none;}
-		#carrusel-imagen {display: none;}
-		#audio {display: none;}
-		#video {display: none;}
+			#simple {display: inline;}
+			#imagen {display: none;}
+			#carrusel-imagen {display: none;}
+			#audio {display: none;}
+			#video {display: none;}
 
-		#defecto {display: inline;}
+		</style>		
 
-	</style>
+	@endif
+
+	@if($post->str_tipo == 'imagen')
+
+		<style type="text/css">
+
+			#simple {display: none;}
+			#imagen {display: inline;}
+			#carrusel-imagen {display: none;}
+			#audio {display: none;}
+			#video {display: none;}
+
+		</style>		
+
+	@endif
+
+	@if($post->str_tipo == 'carrusel-imagen')
+
+		<style type="text/css">
+
+			#simple {display: none;}
+			#imagen {display: none;}
+			#carrusel-imagen {display: inline;}
+			#audio {display: none;}
+			#video {display: none;}
+
+		</style>		
+
+	@endif
+
+	@if($post->str_tipo == 'audio')
+
+		<style type="text/css">
+
+			#simple {display: none;}
+			#imagen {display: none;}
+			#carrusel-imagen {display: none;}
+			#audio {display: inline;}
+			#video {display: none;}
+
+		</style>		
+
+	@endif
+
+	@if($post->str_tipo == 'video')
+
+		<style type="text/css">
+
+			#simple {display: none;}
+			#imagen {display: none;}
+			#carrusel-imagen {display: none;}
+			#audio {display: none;}
+			#video {display: inline;}
+
+		</style>		
+
+	@endif	
 
 
 
@@ -82,8 +139,13 @@
 											<a href="#consultar" data-toggle="tab"><i class="fa fa-address-card-o" aria-hidden="true"></i>Ver</a>
 										</li>
 										<li>
-											<a href="#editar" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+											<a href="#editar" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Post</a>
 										</li>
+
+										<li>
+											<a href="#editarEtiquetas" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Etiquetas</a>
+										</li>
+
 										<li>
 											<a href="#editarMultimedia" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Multimedia</a>
 										</li>
@@ -118,7 +180,7 @@
 															  	</center>
 															  @elseif ($post->str_tipo == 'video')
 															  	<center>
-																	<iframe class="embed-responsive-item" src="{{ $post->str_video }}" width="800" height="400"></iframe>
+																	{!! html_entity_decode($post->str_video) !!}
 															  	</center>
 															  @elseif ($post->str_tipo == 'carrusel-imagen')
 															  	<center>
@@ -271,60 +333,67 @@
 
 										</div>
 
-										<div id="editarMultimedia" class="tab-pane">
+										<div id="editarEtiquetas" class="tab-pane">
 
+											<div class="row">
 
-										<div class="form-group">
-											<label class="col-md-12 control-label" for="name">Tipo</label>
-											<div class="col-md-12">
-												<select name="str_tipo" class="form-control pointer required" onchange="showfieldTipo(this.options[this.selectedIndex].value)">
-													
+												<fieldset>
 
-													
-													@foreach ($tipopost as $value)
-																	
-													<option value="{{$value}}" <?php if ($value == $post->str_tipo) {?> selected <?php }?> >{{$value}}</option>
+													<div class="col-md-1 col-sm-1"></div>
 
-													@endforeach
-												</select>
+													<div class="col-md-10 col-sm-10">
+														<label>Etiquetas</label>
+														
+														<input class="pull-right" type="checkbox" name="categoria" value="" onclick="todasEtiquetas()">
+														<label class="pull-right"> Seleccionar todas &nbsp;</label>
+
+														<div class="row">
+
+														<?php
+															$x = 0;
+														?>
+														@foreach($etiquetas as $clave => $valor)
+										
+															<div class="col-md-4">
+
+			                                                    {!! Form::checkbox("str_categoria", $valor) !!}
+			                                                    {!! Form::label('str_categoria', $valor) !!}           
+
+															</div>
+															<?php $x++; ?>
+														@endforeach
+
+														</div>
+
+													</div>
+
+													<div class="col-md-1 col-sm-1"></div>
+
+												</fieldset>
+
 											</div>
+
 										</div>
 
+										<div id="editarMultimedia" class="tab-pane">
 
+												<fieldset>
+													<div class="form-group">
+														<label class="col-md-3 control-label" for="name">Tipo</label>
+														<div class="col-md-8">
+															<select name="tipo" class="form-control pointer required" onchange="showfieldTipo(this.options[this.selectedIndex].value)">
+																
+																@foreach ($tipopost as $value)
+																				
+																<option value="{{$value}}" <?php if ($value == $post->str_tipo) {?> selected <?php }?> >{{$value}}</option>
 
-												<div id="defecto">
-													
-													@if($post->str_tipo == 'simple')
+																@endforeach
+															</select>
+														</div>
+													</div>
+												</fieldset>	
 
-														@include('post.multimediaSimple')
-
-													@endif
-
-													@if($post->str_tipo == 'imagen')
-
-														@include('post.multimediaImagen')
-
-													@endif
-
-													@if($post->str_tipo == 'carrusel-imagen')
-
-														@include('post.multimediaCarruselImagen')
-
-													@endif
-
-													@if($post->str_tipo == 'audio')
-
-														@include('post.multimediaAudio')
-
-													@endif
-
-													@if($post->str_tipo == 'video')
-
-														@include('post.multimediaVideo')
-
-													@endif
-
-												</div>
+												<hr>
 
 												<div id="simple">
 													
@@ -406,21 +475,42 @@
 			</section>
 			<!-- /MIDDLE -->
 
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
 
+	function todasEtiquetas() {
+
+		var categoria = document.getElementsByName("categoria");
+
+		if(categoria[0].checked == true){
+
+		    var x = document.getElementsByName("str_categoria");
+		    var i;
+		    for (i = 0; i < x.length; i++) {
+		        if (x[i].type == "checkbox") {
+		            x[i].checked = true;
+		        }
+		    }
+
+		}else{
+
+		    var x = document.getElementsByName("str_categoria");
+		    var i;
+		    for (i = 0; i < x.length; i++) {
+		        if (x[i].type == "checkbox") {
+		            x[i].checked = false;
+		        }
+		    }
+
+		}
+	}
 
 	function showfieldTipo(name){
 
+	    var x = document.getElementsByName("str_tipo");
+	    var i;
+	    for (i = 0; i < x.length; i++) {
+	        x[i].value = name;
+	    }
 
 		if(name=='simple'){
 	  	
@@ -476,11 +566,11 @@
 
 		if(name=='youtube'){
 	  	
-	  		document.getElementById('div1').innerHTML='<label class="input"><i class="icon-append fa fa-youtube-play" aria-hidden="true"></i><input type="text" class="form-control pointer required" name="str_video" placeholder="Ejemplo: http://www.youtube.com/embed/W7Las-MJnJo"/><span class="tooltip tooltip-top-right">Ingrese el link de Youtube</span></label>';
+	  		document.getElementById('div1').innerHTML='<textarea id="str_video" name="str_video" class="form-control required" placeholder="Ejemplo: <iframe class=embed-responsive-item width=560 height=315 src=http://www.youtube.com/embed/W7Las-MJnJo></iframe>" rows="4" cols="350"></textarea><span class="tooltip tooltip-top-right">Ingrese el link de video</span>';
 
 	  	}else if (name=='vimeo'){ 
 
-	  		document.getElementById('div1').innerHTML='<label class="input"><i class="icon-append fa fa-vimeo" aria-hidden="true"></i><input type="text" class="form-control pointer required" name="str_video" placeholder="Ejemplo: http://player.vimeo.com/video/8408210"/><span class="tooltip tooltip-top-right">Ingrese el link de Vimeo</span></label>';
+	  		document.getElementById('div1').innerHTML='<textarea id="str_video" name="str_video" class="form-control required" placeholder="Ejemplo: <iframe class=embed-responsive-item src=http://player.vimeo.com/video/8408210 width=800 height=450></iframe>" rows="4" cols="350"></textarea><span class="tooltip tooltip-top-right">Ingrese el link de video</span>';
 
 		}
 
