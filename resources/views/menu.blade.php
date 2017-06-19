@@ -26,83 +26,23 @@
 
 						@if (Auth::user()->str_rol == "Administrador")
 
-							<li>
-								<a href="#">
-									<i class="fa fa-menu-arrow pull-right"></i>
-									<i class="main-icon fa fa-users"></i> <span>Usuarios</span>
-								</a>
-								<ul><!-- submenus -->
-									<li><a href="{{ route('registrar') }}">Crear Cuenta</a></li>
-									<li><a href="{{ route('buscarCuenta') }}">Buscar Cuenta</a></li>
-								</ul>
-							</li>
+							@include('rolAdmin')
+							@include('rolUsuario')
+							@include('rolBlog')
 
 						@endif
 
-							<li>
-								<a href="#">
-									<i class="fa fa-menu-arrow pull-right"></i>
-									<i class="main-icon fa fa-id-card-o""></i> <span>Equipo iLernus</span>
-								</a>
-								<ul><!-- submenus -->
-									<li><a href="{{ route('registrarPi') }}">Nuevo</a></li>
-									<li><a href="{{ route('buscarCuentaPi') }}">Buscar</a></li>
-								</ul>
-							</li>
+						@if (Auth::user()->str_rol == "Usuario")
 
-											
+							@include('rolUsuario')
+							
+						@endif
 
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-graduation-cap"></i> <span>Instructores</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="{{ route('registrarIns') }}">Nuevo</a></li>
-									<li><a href="{{ route('buscarCuentaIns') }}">Buscar</a></li>
-							</ul>
-						</li>
+						@if (Auth::user()->str_rol == "Blog")
 
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-book"></i> <span>Cursos</span>
-							</a>
-							<ul><!-- submenus -->
-								<li><a href="#">Nuevo</a></li>
-								<li><a href="#">Buscar</a></li>
-							</ul>
-						</li>						
+							@include('rolBlog')
 
-						<li>
-							<a href="#">
-								<i class="fa fa-menu-arrow pull-right"></i>
-								<i class="main-icon fa fa-rss"></i> <span>Blog</span>
-							</a>
-							<ul><!-- submenus -->
-								<li>
-									<a href="#">
-										<i class="fa fa-menu-arrow pull-right"></i>
-										Autores
-									</a>
-									<ul>
-										<li><a href="{{ route('registrarAu')}}">Nuevo</a></li>
-										<li><a href="{{ route('buscarCuentaAu')}}">Buscar</a></li>
-									</ul>
-								</li>
-
-								<li>
-									<a href="#">
-										<i class="fa fa-menu-arrow pull-right"></i>
-										Post
-									</a>
-									<ul>
-										<li><a href="{{ route('registrarPost')}}">Nuevo</a></li>
-										<li><a href="{{ route('buscarPost')}}">Buscar</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>												
+						@endif												
 
 					</ul>
 
