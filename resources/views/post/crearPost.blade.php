@@ -72,7 +72,7 @@
 
 								<div class="panel-body">
 
-								{!! Form::open(['route' => 'registrarPost', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'sky-form boxed validate', 'data-success' => 'Se ha creado el Post con éxito','data-toastr-position' => 'top-right']) !!} 										
+								{!! Form::open(['route' => 'registrarPost', 'id' => 'demo-form', '', 'enctype'=>'multipart/form-data', 'class' => 'sky-form boxed ', 'data-success' => 'Se ha creado el Post con éxito','data-toastr-position' => 'top-right']) !!} 										
 
 											<fieldset>
 												
@@ -116,7 +116,9 @@
 											
 																<div class="col-md-4">
 
-			                                                        {!! Form::checkbox("str_categoria", $valor) !!}
+			                                                        
+
+																	<input class="" type="checkbox" name="str_categoria[]" value="{{ $valor }}">			                                                        
 			                                                        {!! Form::label('str_categoria', $valor) !!}           
 
 																</div>
@@ -240,7 +242,7 @@
 
 		if(categoria[0].checked == true){
 
-		    var x = document.getElementsByName("str_categoria");
+		    var x = document.getElementsByName("str_categoria[]");
 		    var i;
 		    for (i = 0; i < x.length; i++) {
 		        if (x[i].type == "checkbox") {
@@ -250,7 +252,7 @@
 
 		}else{
 
-		    var x = document.getElementsByName("str_categoria");
+		    var x = document.getElementsByName("str_categoria[]");
 		    var i;
 		    for (i = 0; i < x.length; i++) {
 		        if (x[i].type == "checkbox") {

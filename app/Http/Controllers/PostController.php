@@ -119,8 +119,12 @@ class PostController extends Controller
            
         if($data['str_tipo'] == 'simple'){
 
+            //echo Auth::user()->id;
+            //die();
+
             $post = Post::create([
 
+            'lng_idadmin' =>  Auth::user()->id,    
             'str_tipo' =>  $data['str_tipo'],
             'lng_idautor' =>  $data['lng_idautor'],
             'str_titulo' => $titulo,
@@ -135,6 +139,7 @@ class PostController extends Controller
 
             $post = Post::create([
 
+            'lng_idadmin' =>  Auth::user()->id,
             'str_tipo' =>  $data['str_tipo'],
             'lng_idautor' =>  $data['lng_idautor'],
             'str_titulo' => $titulo,
@@ -158,6 +163,7 @@ class PostController extends Controller
 
             $post = Post::create([
 
+            'lng_idadmin' =>  Auth::user()->id,
             'str_tipo' =>  $data['str_tipo'],
             'lng_idautor' =>  $data['lng_idautor'],
             'str_titulo' => $titulo,
@@ -173,6 +179,7 @@ class PostController extends Controller
 
             $post = Post::create([
 
+            'lng_idadmin' =>  Auth::user()->id, 
             'str_tipo' =>  $data['str_tipo'],
             'lng_idautor' =>  $data['lng_idautor'],
             'str_titulo' => $titulo,
@@ -186,6 +193,7 @@ class PostController extends Controller
 
             $post = Post::create([
 
+            'lng_idadmin' =>  Auth::user()->id,    
             'str_tipo' =>  $data['str_tipo'],
             'lng_idautor' =>  $data['lng_idautor'],
             'str_titulo' => $titulo,

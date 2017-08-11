@@ -21,7 +21,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['lng_idautor', 'str_estatus','str_titulo', 'str_post', 'str_post_resumen', 'str_tipo', 'str_video','str_audio', 'blb_img1', 'blb_img2', 'blb_img3', 'bol_eliminado'];
+    protected $fillable = ['lng_idadmin','lng_idautor', 'str_estatus','str_titulo', 'str_post', 'str_post_resumen', 'str_tipo', 'str_video','str_audio', 'blb_img1', 'blb_img2', 'blb_img3', 'bol_eliminado'];
 
 
     /**
